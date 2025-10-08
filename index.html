@@ -13,14 +13,19 @@
   --judul-icon-size: 80px;
   --judul-icon-gap: 20px;
   --judul-board-h: 68px;
+
+  /* KUNCI: ukuran kotak */
+  --box-size: clamp(200px, 20vw, 260px);    /* desktop/tablet */
 }
 @media (max-width:1024px){
   :root{ --stage-offset: 230px; --judul-icon-size: 72px; --judul-board-h: 62px; }
 }
-
-/* mobile variables akan dioverride di blok mobile baru di bawah */
+/* mobile variables */
 @media (max-width:600px){
-  :root{ --stage-offset: 150px; --judul-icon-size: 48px; --judul-board-h: 54px; }
+  :root{
+    --stage-offset: 150px; --judul-icon-size: 48px; --judul-board-h: 54px;
+    --box-size: clamp(120px, 28vw, 160px); /* ukuran box hp */
+  }
 }
 
 html, body{
@@ -100,58 +105,55 @@ stage{ margin-top: var(--stage-offset); }
 }
 
 /* paksa warna popup jadi hitam */
-#popupContent,
-#popupContent * { color: #111 !important; }
+#popupContent, #popupContent * { color: #111 !important; }
 #popupContent .amount { color: #FFD700 !important; text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45); }
 #popupContent b { color: #000 !important; }
 
 /* ================== GRID PETI ================== */
 .wrapper{ display:flex; justify-content:center; width:100%; }
 .box-container{
-  display:grid; grid-template-columns:repeat(3, 1fr);
-  gap: clamp(18px, 2.2vw, 34px);
-  padding:20px; max-width: var(--grid-w); margin: 0 auto 40px;
+  display:grid;
+  grid-template-columns: repeat(3, var(--box-size)); /* BUKAN 1fr */
+  gap: clamp(14px, 2.2vw, 24px);
+  padding:20px;
+  max-width: var(--grid-w);
+  margin: 0 auto 40px;
+  justify-content:center; /* center grid */
 }
 
-/* desktop/tablet default */
+/* Kotak selalu square sesuai --box-size */
 .box{
-  width: clamp(200px, 28vw, 320px);
-  height: clamp(200px, 28vw, 320px);
+  width: var(--box-size);
+  height: var(--box-size);
   background:#151515; border:2px solid #400; border-radius:16px;
   display:flex; align-items:center; justify-content:center; transition:.25s ease;
 }
-.box:hover{ transform:scale(1.06) rotate(2deg); box-shadow:0 0 22px rgba(200,0,0,.6); border-color:#d00; }
+.box:hover{ transform:scale(1.04) rotate(1deg); box-shadow:0 0 18px rgba(200,0,0,.6); border-color:#d00; }
 
 .box svg{
-  width: clamp(84px, 10vw, 128px);
-  height: clamp(120px, 14vw, 176px);
+  width: clamp(64px, 9vw, 120px);
+  height: clamp(90px, 12vw, 160px);
   filter:drop-shadow(0 0 6px rgba(255,0,0,.7)); transition:.2s;
 }
-.box:hover svg{ transform:translateY(-2px) scale(1.04); }
+.box:hover svg{ transform:translateY(-2px) scale(1.02); }
 
-/* Efek */
-@keyframes robekAnim{0%{transform:scale(1)}30%{transform:scale(1.2) rotate(2deg)}60%{transform:scale(1) rotate(-2deg)}100%{transform:scale(1.05)}}
-.box.terbuka{ animation:robekAnim .3s ease forwards; border:3px solid #b30000; }
+/* Efek (sedikit dipelankan & dipendekkan) */
+@keyframes robekAnim{0%{transform:scale(1)}30%{transform:scale(1.1) rotate(1deg)}60%{transform:scale(1) rotate(-1deg)}100%{transform:scale(1.03)}}
+.box.terbuka{ animation:robekAnim .25s ease forwards; border:3px solid #b30000; }
 @keyframes flipLoop{0%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
-.box.flip-loop{ animation:flipLoop .15s linear 30; transform-style:preserve-3d; backface-visibility:hidden; }
-.box.flip-spin{ animation: flipLoop .45s linear infinite; transform-style: preserve-3d; backface-visibility: hidden; }
+.box.flip-loop{ animation:flipLoop .2s linear 20; transform-style:preserve-3d; backface-visibility:hidden; }
+.box.flip-spin{ animation: flipLoop .5s linear infinite; transform-style: preserve-3d; backface-visibility: hidden; }
 @keyframes flipBox{0%,20%,40%,60%,80%,100%{transform:rotateY(0)}10%,30%,50%,70%,90%{transform:rotateY(180deg)}}
-.box.clicked{ animation:flipBox .99s ease-in-out; transform-style:preserve-3d; }
+.box.clicked{ animation:flipBox .9s ease-in-out; transform-style:preserve-3d; }
 
 /* ================== NOMINAL ================== */
 .isi-robek{ display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:6px; }
-.isi-robek .icon{ font-size: clamp(20px, 2vw, 32px); margin-bottom: 6px; }
-.isi-robek .nominal{ font-size: clamp(32px, 3vw, 44px); font-weight: 800; line-height:1.2; }
-.isi-robek .nominal.win{ font-size: clamp(36px, 3.5vw, 52px); color:#FFD700; font-weight:900; }
+.isi-robek .icon{ font-size: clamp(20px, 2vw, 28px); margin-bottom: 6px; }
+.isi-robek .nominal{ font-size: clamp(24px, 2.6vw, 36px); font-weight: 800; line-height:1.2; }
+.isi-robek .nominal.win{ font-size: clamp(28px, 3vw, 44px); color:#FFD700; font-weight:900; }
 
 /* ================== POPUP (UMUM) ================== */
 .popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
-.popup{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.72); backdrop-filter: blur(2px); z-index: 100000; }
-
-#popupContent .pop-title { font-size: clamp(48px, 6vw, 60px) !important; font-weight: 900; color: #000; text-shadow: 0 0 10px rgba(255,215,0,0.7), 0 0 20px rgba(255,180,0,0.5); letter-spacing: 0.5px; line-height: 1.1; }
-#popupContent .pop-title .amount { color: #FFD700; text-shadow: 0 0 14px rgba(255,215,0,.8), 0 0 26px rgba(255,180,0,.5); }
-#popupContent .pop-sub { font-size: clamp(22px, 3vw, 26px) !important; font-weight: 600; color: #222; letter-spacing: 0.4px; margin-top: 10px; }
-
 .popup-card{ position:relative; width:min(96vw, 880px); border-radius:28px; padding: clamp(48px, 7vw, 84px) clamp(28px, 4vw, 48px); background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%); border:2px solid rgba(255,0,0,.28); box-shadow: 0 0 40px rgba(255,0,0,.35), 0 26px 80px rgba(0,0,0,.6); text-align:center; transform: translateY(12px) scale(.96); opacity: 0; animation: popupIn .38s ease forwards; }
 @keyframes popupIn{ to{ transform: translateY(0) scale(1); opacity:1; } }
 .popup-card .close-x{ z-index:2; }
@@ -169,65 +171,33 @@ stage{ margin-top: var(--stage-offset); }
 .popup-card .klaim-button img{ height: clamp(30px, 4.2vw, 46px) !important; }
 @keyframes pulseGlow{ 0%,100%{ box-shadow:0 0 30px rgba(255,0,0,.4), 0 0 60px rgba(255,0,0,.2); } 50% { box-shadow:0 0 55px rgba(255,0,0,.7), 0 0 85px rgba(255,0,0,.3); } }
 
-.popup-card .klaim-button:hover{ background:#e61919; }
-
-/* ======= Popup History ======= */
 #historyContent{ text-align:left; max-height:60vh; overflow:auto; font-size:16px; }
 .close-x{ position:absolute; top:10px; right:12px; width:36px; height:36px; border-radius:50%; background:#111; color:#fff; border:1px solid #333; display:flex; align-items:center; justify-content:center; font-weight:900; cursor:pointer; }
 .close-x:hover{ filter:brightness(1.2); }
+
+/* ================== GIF POJOK – dikecilkan & diturunkan ================== */
+#gif-left{
+  position:fixed; left:10px; bottom:6px; width:140px; opacity:.9; pointer-events:none; z-index:8;
+}
+#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:8; }
+#gif-right-wrap img:first-child{ width:220px; display:block; }
+#gif-right{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%); width:110px; }
 
 /* ================== RESPONSIVE – MOBILE (≤600px) ================== */
 @media (max-width:600px){
   .banner-berjalan{ font-size:12px; padding:6px 0; }
   .fixed-judul{ top:66px; }
 
-  .box-toolbar{
-    gap:10px;
-    margin:0 auto 12px;
-    padding:6px 0;
-  }
-  .box-toolbar button{
-    height:44px;
-    padding:0 14px;
-    font-size:14px;
-  }
-
-  .box-container{
-    grid-template-columns:repeat(3, 1fr);
-    gap:12px;
-    padding:12px;
-    max-width:96vw;
-  }
-
-  /* KUNCI: ukuran box ikut kolom */
-  .box{
-    width:100%;
-    height:auto;
-    aspect-ratio:1/1;
-    border-width:2px;
-  }
-  .box svg{
-    width:60%;
-    height:auto;
-  }
+  .box-toolbar{ gap:10px; margin:0 auto 12px; padding:6px 0; }
+  .box-toolbar button{ height:44px; padding:0 14px; font-size:14px; }
 
   .popup-card{ width:92vw; padding:28px 16px; }
   .pop-stack{ padding:16px; }
-}
 
-/* ====== VERY SMALL (≤480px) – atur GIF biar gak nutup grid ====== */
-@media (max-width:480px){
-  img[src*="c%C6%B0%E1%BB%9Di-kh%C3%B4ng-c%C3%B3g%C3%AC.gif"]{
-    width:120px !important;
-    left:8px !important;
-    bottom:8px !important;
-    z-index:8 !important;
-  }
-  img[src*="sluggish-slayer.gif"]{ width:180px !important; }
-  img[src*="evil-nun-keplerian.gif"]{
-    width:100px !important;
-    bottom:24px !important;
-  }
+  /* GIF makin kecil */
+  #gif-left{ width:110px; bottom:4px; left:6px; }
+  #gif-right-wrap img:first-child{ width:170px; }
+  #gif-right{ width:92px; bottom:14px; }
 }
   </style>
 </head>
@@ -289,7 +259,7 @@ stage{ margin-top: var(--stage-offset); }
     </div>
   </div>
 
-  <!-- POPUP HISTORY (BARU) -->
+  <!-- POPUP HISTORY -->
   <div id="popupHistory" class="popup">
     <div class="popup-card">
       <button class="close-x" onclick="byId('popupHistory').style.display='none'">×</button>
@@ -298,16 +268,11 @@ stage{ margin-top: var(--stage-offset); }
     </div>
   </div>
 
-  <!-- GIF POJOK -->
-  <img src="https://media.tenor.com/s-6xMGhtfssAAAAi/c%C6%B0%E1%BB%9Di-kh%C3%B4ng-c%C3%B3g%C3%AC.gif"
-       style="position:fixed;bottom:20px;left:20px;width:220px;z-index:999;pointer-events:none;opacity:.9;">
-
-  <div style="position:fixed;bottom:10px;right:10px;z-index:9;">
-    <div style="position:relative;display:inline-block;">
-      <img src="https://media.tenor.com/Bvj4YBWQ6MIAAAAi/sluggish-slayer.gif" style="width:300px;">
-      <img src="https://media.tenor.com/RIoZ0K_k_9kAAAAi/evil-nun-keplerian.gif"
-           style="position:absolute;bottom:35px;left:50%;transform:translateX(-50%);width:150px;">
-    </div>
+  <!-- GIF POJOK (ukuran kecil & nempel bawah) -->
+  <img id="gif-left" src="https://media.tenor.com/s-6xMGhtfssAAAAi/c%C6%B0%E1%BB%9Di-kh%C3%B4ng-c%C3%B3g%C3%AC.gif" alt="" />
+  <div id="gif-right-wrap">
+    <img src="https://media.tenor.com/Bvj4YBWQ6MIAAAAi/sluggish-slayer.gif" alt="">
+    <img id="gif-right" src="https://media.tenor.com/RIoZ0K_k_9kAAAAi/evil-nun-keplerian.gif" alt="">
   </div>
 
   <script>
@@ -327,11 +292,7 @@ const API = "https://script.google.com/macros/s/AKfycbzYzGwZ5tuLljWNGeKl5M65t_Hi
 
 async function gasGet(qs){ const res = await fetch(`${API}?${qs}`, { method: 'GET' }); return res.json(); }
 async function gasPost(action, payload){
-  const res = await fetch(`${API}?action=${encodeURIComponent(action)}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action, ...payload })
-  });
+  const res = await fetch(`${API}?action=${encodeURIComponent(action)}`, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action, ...payload }) });
   return res.json();
 }
 
