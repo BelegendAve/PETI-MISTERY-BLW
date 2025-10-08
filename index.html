@@ -79,9 +79,9 @@ html, body{
 }
 .box-toolbar button{
   flex:0 0 auto;
-  height: clamp(60px, 7vw, 80px);   /* tinggi tombol lebih besar */
-  padding: 0 clamp(28px, 4vw, 48px); /* lebar tombol lebih besar */
-  font-size: clamp(18px, 2vw, 22px); /* ukuran teks lebih besar */
+  height: clamp(60px, 7vw, 80px);
+  padding: 0 clamp(28px, 4vw, 48px);
+  font-size: clamp(18px, 2vw, 22px);
   font-weight:800;
   border-radius:9999px;
   background:linear-gradient(#e51c1c,#b50000);
@@ -110,10 +110,8 @@ html, body{
   color: #000 !important;  /* teks tebal tetap hitam */
 }
 
-
 .box-toolbar button:hover{ background:linear-gradient(#ff2b2b,#cc0000); transform:translateY(-1px) scale(1.02); }
 .box-toolbar button:active{ transform:translateY(1px) scale(.99); }
-
 
 /* ================== GRID PETI ================== */
 .wrapper{ display:flex; justify-content:center; width:100%; }
@@ -171,30 +169,29 @@ html, body{
 
 /* BESARIN TEKS YANG DIPAKAI SEKARANG */
 #popupContent .win-amount{
-  font-size: clamp(44px, 6vw, 64px);   /* gedein di desktop, tetap rapi di HP */
+  font-size: clamp(44px, 6vw, 64px);
   font-weight: 900;
   letter-spacing: .4px;
   line-height: 1.15;
-  color:#000;                          /* biar jelas */
+  color:#000;
   display:block;
   margin: 6px 0 4px;
 }
 
 #popupContent .subnote{
-  font-size: clamp(20px, 3vw, 26px);   /* sedikit lebih besar dari sebelumnya */
+  font-size: clamp(20px, 3vw, 26px);
   font-weight: 600;
   color:#222;
   letter-spacing:.3px;
   margin-top: 8px;
 }
 
-/* kalau mau angka hadiah tetap emas */
+/* angka hadiah tetap emas */
 #popupContent .win-amount b,
 #popupContent .win-amount .amount{
   color:#FFD700;
   text-shadow: 0 0 12px rgba(255,215,0,.75), 0 0 22px rgba(255,180,0,.45);
 }
-
 
 /* ================== POPUP (UMUM) ================== */
 .popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
@@ -205,28 +202,26 @@ html, body{
   display:none; align-items:center; justify-content:center;
   background: rgba(0,0,0,.72);
   backdrop-filter: blur(2px);
-  z-index: 100000; /* paling atas */
+  z-index: 100000;
 }
 
 /* ==== BESARIN TEKS POPUP SECARA PROPORSIONAL ==== */
 #popupContent .pop-title {
-  font-size: clamp(48px, 6vw, 60px) !important;  /* sebelumnya sekitar 36–44px */
+  font-size: clamp(48px, 6vw, 60px) !important;
   font-weight: 900;
   color: #000;
-  text-shadow: 0 0 10px rgba(255,215,0,0.7),
-               0 0 20px rgba(255,180,0,0.5);
+  text-shadow: 0 0 10px rgba(255,215,0,0.7), 0 0 20px rgba(255,180,0,0.5);
   letter-spacing: 0.5px;
   line-height: 1.1;
 }
 
 #popupContent .pop-title .amount {
   color: #FFD700;
-  text-shadow: 0 0 14px rgba(255,215,0,.8),
-               0 0 26px rgba(255,180,0,.5);
+  text-shadow: 0 0 14px rgba(255,215,0,.8), 0 0 26px rgba(255,180,0,.5);
 }
 
 #popupContent .pop-sub {
-  font-size: clamp(22px, 3vw, 26px) !important; /* sedikit dibesarin */
+  font-size: clamp(22px, 3vw, 26px) !important;
   font-weight: 600;
   color: #222;
   letter-spacing: 0.4px;
@@ -241,9 +236,7 @@ html, body{
   padding: clamp(48px, 7vw, 84px) clamp(28px, 4vw, 48px);
   background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%);
   border:2px solid rgba(255,0,0,.28);
-  box-shadow:
-    0 0 40px rgba(255,0,0,.35),
-    0 26px 80px rgba(0,0,0,.6);
+  box-shadow: 0 0 40px rgba(255,0,0,.35), 0 26px 80px rgba(0,0,0,.6);
   text-align:center;
   transform: translateY(12px) scale(.96);
   opacity: 0;
@@ -359,19 +352,9 @@ html, body{
 
 /* ==== Paksa warna teks di popup HISTORY jadi hitam ==== */
 #popupHistory .popup-card { color:#111; }
-
-#historyContent,
-#historyContent * {
-  color:#111 !important;   /* override semua turunan jadi hitam */
-}
-
-/* (opsional) kalau ada text “gold” ingin tetap beda */
+#historyContent, #historyContent * { color:#111 !important; }
 #historyContent [style*="color:gold"] { color:#b8860b !important; }
-
-/* (opsional) warna link */
 #historyContent a { color:#111 !important; text-decoration: underline; }
-
-
   </style>
 </head>
 
@@ -398,13 +381,11 @@ html, body{
 
   <div id="boxPage" style="display:none;">
     <div class="stage">
-<div class="box-toolbar">
-  <button onclick="tampilkanHistoryGabungan()">📜 <span id="textHistori"> CEK HISTORY </span></button>
-  <button onclick="cekPopup()">🔎 CEK POPUP</button>
-</div>
+      <div class="box-toolbar">
+        <button onclick="tampilkanHistoryGabungan()">📜 <span id="textHistori"> CEK HISTORY </span></button>
+        <button onclick="cekPopup()">🔎 CEK POPUP</button>
+      </div>
 
-
-      <!-- historyBox dihapus: sekarang pakai popup -->
       <div class="wrapper">
         <div class="box-container" id="boxArea">
           <div class="box" onclick="pilihBox(this)"></div>
@@ -428,7 +409,7 @@ html, body{
     <div class="popup-card">
       <button class="close-x" onclick="byId('popupHadiah').style.display='none'">×</button>
       <div id="popupContent" style="margin-bottom:15px;"></div>
-      <a href="https://t.me/+2xAFSwHrMB0wZDll" target="_blank" class="klaim-button">
+      <a href="https://t.me/+MYu2cG2rBPwzNGQ9" target="_blank" class="klaim-button">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="height:20px;vertical-align:middle;margin-right:8px;">
         KLAIM BONUS DISINI
       </a>
@@ -552,7 +533,6 @@ function cekPopup(){
   const history = byId('popupHistory');
   const hadiahContent = byId('popupContent');
 
-  // Kalau popup hadiah sudah punya isi, tampilkan itu dulu
   const hasHadiah = hadiahContent && hadiahContent.textContent.trim().length > 0;
 
   if (hasHadiah) {
@@ -560,19 +540,15 @@ function cekPopup(){
     return;
   }
 
-  // Kalau belum ada konten hadiah, coba tampilkan History.
   const user = (byId('nama')?.value || '').trim();
   if (user) {
-    // Panggil fungsi yang sudah ada untuk tarik data history dan munculkan popup-nya
     tampilkanHistoryGabungan();
   } else {
-    // Fallback: kasih info dulu di popup history
     byId('historyContent').innerHTML =
       "<p style='color:#c00;font-weight:700;margin:0'>Belum ada popup hadiah untuk ditampilkan.<br>Masukkan nama, lalu cek histori.</p>";
     history.style.display = 'flex';
   }
 }
-
 
 /* Pilih satu box — flip infinite sampai data siap */
 function pilihBox(el){
@@ -609,12 +585,12 @@ function pilihBox(el){
         stopLoop('sfxDrumBand',400);
         google.script.run.simpanHasil({nama:namaUser,kode:kodeToken,status:hadiahUtama});
 
-byId("popupContent").innerHTML = `
-  <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
-  <div>🎉</div>
-  <strong class="win-amount">MENANG ${hadiahUtama}</strong>
-  <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
-`;
+        byId("popupContent").innerHTML = `
+          <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
+          <div>🎉</div>
+          <strong class="win-amount">MENANG ${hadiahUtama}</strong>
+          <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
+        `;
 
         setTimeout(()=>{
           byId("popupHadiah").style.display="flex";
@@ -692,7 +668,6 @@ function formatRupiah(val){
   return 'Rp ' + n.toLocaleString('id-ID');
 }
 
-
 document.addEventListener('DOMContentLoaded',function(){
   const btn=byId('btnVerifikasi');
   setAllCoffins();
@@ -714,40 +689,83 @@ document.addEventListener('DOMContentLoaded',function(){
   <audio id="sfxRobek" src="https://files.catbox.moe/m83w1f.mp3" preload="auto" playsinline crossorigin="anonymous"></audio>
   <audio id="sfxWin"   src="https://files.catbox.moe/h7gic8.mp3" preload="auto" playsinline crossorigin="anonymous"></audio>
   <!-- <audio id="sfxDrumBand" src="YOUR-DRUM-LOOP.mp3" preload="auto" playsinline crossorigin="anonymous"></audio> -->
-<script>
-const API_BASE = 'https://script.google.com/macros/s/AKfycbzLqAEIM_A46GJWgNgkLN2c7KxEBLVhisa4rdUXcZmkdL9jHzXHIOl_6oagqW99oXWa/exec';
 
-// contoh: verifikasi token
-async function cekToken(nama, kode){
-  const url = `${API_BASE}?action=cekDanPakaiToken&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  if(!json.ok) throw new Error(json.error.message);
-  return json.data;
-}
+  <!-- ==================== API SHIM (tempelan ke Web App) ==================== -->
+  <script>
+  const API_BASE = 'https://script.google.com/macros/s/AKfycbzLqAEIM_A46GJWgNgkLN2c7KxEBLVhisa4rdUXcZmkdL9jHzXHIOl_6oagqW99oXWa/exec';
 
-// contoh: ambil histori
-async function getHistory(nama){
-  const url = `${API_BASE}?action=ambilHistoriGabungan&nama=${encodeURIComponent(nama)}`;
-  const res = await fetch(url);
-  const json = await res.json();
-  if(!json.ok) throw new Error(json.error.message);
-  return json.data;
-}
+  async function _fetchJSON(url, opt){
+    const res = await fetch(url, opt);
+    const json = await res.json();
+    if(!json.ok) throw new Error(json.error && json.error.message || 'API error');
+    return json.data;
+  }
 
-// contoh: simpan hasil
-async function simpanHasil(nama, kode, status){
-  const res = await fetch(`${API_BASE}?action=simpanHasil`, {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ nama, kode, status })
-  });
-  const json = await res.json();
-  if(!json.ok) throw new Error(json.error.message);
-  return json.data;
-}
-</script>
+  const _api = {
+    async cekDanPakaiToken(nama, kode){
+      const u = `${API_BASE}?action=cekDanPakaiToken&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`;
+      return _fetchJSON(u);
+    },
+    async ambilHistoriGabungan(nama){
+      const u = `${API_BASE}?action=ambilHistoriGabungan&nama=${encodeURIComponent(nama)}`;
+      return _fetchJSON(u);
+    },
+    async getSisaHadiah(){
+      return _fetchJSON(`${API_BASE}?action=getSisaHadiah`);
+    },
+    async getTipeKupon(nama){
+      return _fetchJSON(`${API_BASE}?action=getTipeKupon&nama=${encodeURIComponent(nama)}`);
+    },
+    async simpanHasil(payload){
+      return _fetchJSON(`${API_BASE}?action=simpanHasil`, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(payload)
+      });
+    }
+  };
 
+  /* Emulasi google.script.run supaya kode lama tetap jalan 1:1 */
+  (function attachGoogleRunShim(){
+    const runner = (() => {
+      let onSuccess = null, onFailure = null;
+      const proxy = new Proxy({}, {
+        get(_, prop){
+          if (prop === 'withSuccessHandler') return (fn)=>{ onSuccess = fn; return proxy; };
+          if (prop === 'withFailureHandler') return (fn)=>{ onFailure = fn; return proxy; };
+          return (...args)=>{
+            (async () => {
+              try{
+                let data;
+                switch(prop){
+                  case 'cekDanPakaiToken':     data = await _api.cekDanPakaiToken(args[0], args[1]); break;
+                  case 'ambilHistoriGabungan': data = await _api.ambilHistoriGabungan(args[0]);     break;
+                  case 'getSisaHadiah':        data = await _api.getSisaHadiah();                    break;
+                  case 'getTipeKupon':         data = await _api.getTipeKupon(args[0]);             break;
+                  case 'simpanHasil':          data = await _api.simpanHasil(args[0]);              break;
+                  default: throw new Error('Unknown method: '+prop);
+                }
+                if (typeof onSuccess === 'function') onSuccess(data);
+              }catch(err){
+                if (typeof onFailure === 'function') onFailure(err);
+                else console.error(err);
+              }finally{
+                onSuccess = null; onFailure = null;
+              }
+            })();
+            return proxy;
+          };
+        }
+      });
+      return proxy;
+    })();
+
+    window.google = window.google || {};
+    window.google.script = window.google.script || {};
+    window.google.script.run = runner;
+  })();
+  </script>
+  <!-- ================== /API SHIM ================== -->
 
 </body>
 </html>
