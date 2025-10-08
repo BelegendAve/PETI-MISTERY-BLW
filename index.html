@@ -37,6 +37,20 @@ html, body{
   }
 }
 
+    /* ==== DESKTOP TWEAK (biar gak terlalu ke bawah & lebih gede) ==== */
+@media (min-width: 900px) {
+  :root{
+    /* kotak lebih besar di desktop */
+    --box-size: clamp(160px, 12vw, 220px);
+    /* judul tetap, tapi konten dinaikkan sedikit */
+    --stage-offset: 86px; /* boleh turunin ke 78px kalau mau lebih naik */
+  }
+  .wrapper{
+    padding-bottom: 40px !important;  /* tadinya 120px, bikin ngambang */
+    transform: translateY(-40px);     /* naikin grid ~40px */
+  }
+}
+
 /* ================== BANNER & JUDUL (fixed) ================== */
 .banner-berjalan{
   position:fixed; top:0; left:0; z-index:9999;
