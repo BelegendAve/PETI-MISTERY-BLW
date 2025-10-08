@@ -50,6 +50,7 @@ html, body{
 .judul-ikon::after { right:10px; background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
 
 /* ================== OFFSET KONTEN BOX ================== */
+stage{ margin-top: var(--stage-offset); }
 .stage{ margin-top: var(--stage-offset); }
 
 /* ================== LOGO (FORM ONLY) ================== */
@@ -79,9 +80,9 @@ html, body{
 }
 .box-toolbar button{
   flex:0 0 auto;
-  height: clamp(60px, 7vw, 80px);   /* tinggi tombol lebih besar */
-  padding: 0 clamp(28px, 4vw, 48px); /* lebar tombol lebih besar */
-  font-size: clamp(18px, 2vw, 22px); /* ukuran teks lebih besar */
+  height: clamp(60px, 7vw, 80px);
+  padding: 0 clamp(28px, 4vw, 48px);
+  font-size: clamp(18px, 2vw, 22px);
   font-weight:800;
   border-radius:9999px;
   background:linear-gradient(#e51c1c,#b50000);
@@ -96,20 +97,11 @@ html, body{
   transition:transform .15s ease, background .15s ease;
 }
 
+/* paksa warna popup jadi hitam */
 #popupContent,
-#popupContent * {
-  color: #111 !important;  /* warna teks jadi hitam */
-}
-
-#popupContent .amount {
-  color: #FFD700 !important; /* tetap emas untuk nilai menang */
-  text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45);
-}
-
-#popupContent b {
-  color: #000 !important;  /* teks tebal tetap hitam */
-}
-
+#popupContent * { color: #111 !important; }
+#popupContent .amount { color: #FFD700 !important; text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45); }
+#popupContent b { color: #000 !important; }
 
 .box-toolbar button:hover{ background:linear-gradient(#ff2b2b,#cc0000); transform:translateY(-1px) scale(1.02); }
 .box-toolbar button:active{ transform:translateY(1px) scale(.99); }
@@ -148,11 +140,7 @@ html, body{
 .box.flip-loop{ animation:flipLoop .15s linear 30; transform-style:preserve-3d; backface-visibility:hidden; }
 
 /* loop infinite */
-.box.flip-spin{
-  animation: flipLoop .45s linear infinite;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
+.box.flip-spin{ animation: flipLoop .45s linear infinite; transform-style: preserve-3d; backface-visibility: hidden; }
 
 @keyframes flipBox{0%,20%,40%,60%,80%,100%{transform:rotateY(0)}10%,30%,50%,70%,90%{transform:rotateY(180deg)}}
 .box.clicked{ animation:flipBox .99s ease-in-out; transform-style:preserve-3d; }
@@ -160,198 +148,54 @@ html, body{
 /* ================== NOMINAL (BESAR) ================== */
 .isi-robek{ display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:6px; }
 .isi-robek .icon{ font-size: clamp(20px, 2vw, 32px); margin-bottom: 6px; }
-.isi-robek .nominal{
-  font-size: clamp(32px, 3vw, 44px);
-  font-weight: 800; line-height:1.2;
-}
-.isi-robek .nominal.win{
-  font-size: clamp(36px, 3.5vw, 52px);
-  color:#FFD700; font-weight:900;
-}
+.isi-robek .nominal{ font-size: clamp(32px, 3vw, 44px); font-weight: 800; line-height:1.2; }
+.isi-robek .nominal.win{ font-size: clamp(36px, 3.5vw, 52px); color:#FFD700; font-weight:900; }
 
-/* BESARIN TEKS YANG DIPAKAI SEKARANG */
-#popupContent .win-amount{
-  font-size: clamp(44px, 6vw, 64px);   /* gedein di desktop, tetap rapi di HP */
-  font-weight: 900;
-  letter-spacing: .4px;
-  line-height: 1.15;
-  color:#000;                          /* biar jelas */
-  display:block;
-  margin: 6px 0 4px;
-}
-
-#popupContent .subnote{
-  font-size: clamp(20px, 3vw, 26px);   /* sedikit lebih besar dari sebelumnya */
-  font-weight: 600;
-  color:#222;
-  letter-spacing:.3px;
-  margin-top: 8px;
-}
-
-/* kalau mau angka hadiah tetap emas */
+/* popup teks besar */
+#popupContent .win-amount{ font-size: clamp(44px, 6vw, 64px); font-weight: 900; letter-spacing: .4px; line-height: 1.15; color:#000; display:block; margin: 6px 0 4px; }
+#popupContent .subnote{ font-size: clamp(20px, 3vw, 26px); font-weight: 600; color:#222; letter-spacing:.3px; margin-top: 8px; }
 #popupContent .win-amount b,
-#popupContent .win-amount .amount{
-  color:#FFD700;
-  text-shadow: 0 0 12px rgba(255,215,0,.75), 0 0 22px rgba(255,180,0,.45);
-}
-
+#popupContent .win-amount .amount{ color:#FFD700; text-shadow: 0 0 12px rgba(255,215,0,.75), 0 0 22px rgba(255,180,0,.45); }
 
 /* ================== POPUP (UMUM) ================== */
 .popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
+.popup{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(0,0,0,.72); backdrop-filter: blur(2px); z-index: 100000; }
 
-/* === Overlay & layering === */
-.popup{
-  position:fixed; inset:0;
-  display:none; align-items:center; justify-content:center;
-  background: rgba(0,0,0,.72);
-  backdrop-filter: blur(2px);
-  z-index: 100000; /* paling atas */
-}
+#popupContent .pop-title { font-size: clamp(48px, 6vw, 60px) !important; font-weight: 900; color: #000; text-shadow: 0 0 10px rgba(255,215,0,0.7), 0 0 20px rgba(255,180,0,0.5); letter-spacing: 0.5px; line-height: 1.1; }
+#popupContent .pop-title .amount { color: #FFD700; text-shadow: 0 0 14px rgba(255,215,0,.8), 0 0 26px rgba(255,180,0,.5); }
+#popupContent .pop-sub { font-size: clamp(22px, 3vw, 26px) !important; font-weight: 600; color: #222; letter-spacing: 0.4px; margin-top: 10px; }
 
-/* ==== BESARIN TEKS POPUP SECARA PROPORSIONAL ==== */
-#popupContent .pop-title {
-  font-size: clamp(48px, 6vw, 60px) !important;  /* sebelumnya sekitar 36–44px */
-  font-weight: 900;
-  color: #000;
-  text-shadow: 0 0 10px rgba(255,215,0,0.7),
-               0 0 20px rgba(255,180,0,0.5);
-  letter-spacing: 0.5px;
-  line-height: 1.1;
-}
-
-#popupContent .pop-title .amount {
-  color: #FFD700;
-  text-shadow: 0 0 14px rgba(255,215,0,.8),
-               0 0 26px rgba(255,180,0,.5);
-}
-
-#popupContent .pop-sub {
-  font-size: clamp(22px, 3vw, 26px) !important; /* sedikit dibesarin */
-  font-weight: 600;
-  color: #222;
-  letter-spacing: 0.4px;
-  margin-top: 10px;
-}
-
-/* === Kartu pop-up utama === */
-.popup-card{
-  position:relative;
-  width:min(96vw, 880px);
-  border-radius:28px;
-  padding: clamp(48px, 7vw, 84px) clamp(28px, 4vw, 48px);
-  background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%);
-  border:2px solid rgba(255,0,0,.28);
-  box-shadow:
-    0 0 40px rgba(255,0,0,.35),
-    0 26px 80px rgba(0,0,0,.6);
-  text-align:center;
-  transform: translateY(12px) scale(.96);
-  opacity: 0;
-  animation: popupIn .38s ease forwards;
-}
-
-/* animasi masuk */
-@keyframes popupIn{
-  to{ transform: translateY(0) scale(1); opacity:1; }
-}
-
-/* tombol close selalu di atas */
+.popup-card{ position:relative; width:min(96vw, 880px); border-radius:28px; padding: clamp(48px, 7vw, 84px) clamp(28px, 4vw, 48px); background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%); border:2px solid rgba(255,0,0,.28); box-shadow: 0 0 40px rgba(255,0,0,.35), 0 26px 80px rgba(0,0,0,.6); text-align:center; transform: translateY(12px) scale(.96); opacity: 0; animation: popupIn .38s ease forwards; }
+@keyframes popupIn{ to{ transform: translateY(0) scale(1); opacity:1; } }
 .popup-card .close-x{ z-index:2; }
 
-/* ====== ISI TERSTRUKTUR ====== */
 #popupContent{ margin:0; }
-.pop-stack{
-  display:flex; flex-direction:column; align-items:center;
-  gap: clamp(12px, 2.2vw, 22px);
-  padding: clamp(16px, 2.4vw, 28px);
-  border:2px solid #ff2a2a;
-  border-radius:16px;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
-}
-
-.pop-logo{
-  height: clamp(120px, 15vw, 180px);
-  display:block; margin: 0 auto 4px;
-}
-
+.pop-stack{ display:flex; flex-direction:column; align-items:center; gap: clamp(12px, 2.2vw, 22px); padding: clamp(16px, 2.4vw, 28px); border:2px solid #ff2a2a; border-radius:16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.pop-logo{ height: clamp(120px, 15vw, 180px); display:block; margin: 0 auto 4px; }
 .pop-emoji{ font-size: clamp(28px, 4vw, 42px); }
+.pop-title{ font-size: clamp(40px, 5.6vw, 68px); font-weight: 900; letter-spacing: .3px; color:#111; text-shadow: 0 1px 0 #fff; }
+.pop-title .amount{ color:#FFD700; text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45); }
+.pop-sub{ font-size: clamp(18px, 2.6vw, 24px); color:#333; font-weight:500; letter-spacing:.2px; }
 
-.pop-title{
-  font-size: clamp(40px, 5.6vw, 68px);
-  font-weight: 900; letter-spacing: .3px;
-  color:#111;
-  text-shadow: 0 1px 0 #fff;
-}
-.pop-title .amount{
-  color:#FFD700;
-  text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45);
-}
-
-.pop-sub{
-  font-size: clamp(18px, 2.6vw, 24px);
-  color:#333; font-weight:500; letter-spacing:.2px;
-}
-
-/* tombol CTA selaras */
-.popup-card .klaim-button{
-  display:flex; align-items:center; justify-content:center; gap:14px;
-  width:100%; max-width:520px;
-  margin: clamp(22px, 3.2vw, 34px) auto 0;
-  padding: clamp(22px, 3vw, 28px) clamp(24px, 3.2vw, 34px);
-  font-size: clamp(22px, 3.2vw, 32px);
-  font-weight: 900;
-  border-radius:20px;
-  background: linear-gradient(180deg,#ff3030 0%, #a80000 95%);
-  color:#fff; border:2px solid #770000;
-  box-shadow: 0 0 35px rgba(255,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2);
-  transition:.22s ease;
-  animation: pulseGlow 2s infinite;
-}
-.popup-card .klaim-button:hover{
-  transform: scale(1.08);
-  background: linear-gradient(180deg,#ff4040 0%, #b50000 95%);
-  box-shadow: 0 0 50px rgba(255,0,0,.7);
-}
+.popup-card .klaim-button{ display:flex; align-items:center; justify-content:center; gap:14px; width:100%; max-width:520px; margin: clamp(22px, 3.2vw, 34px) auto 0; padding: clamp(22px, 3vw, 28px) clamp(24px, 3.2vw, 34px); font-size: clamp(22px, 3.2vw, 32px); font-weight: 900; border-radius:20px; background: linear-gradient(180deg,#ff3030 0%, #a80000 95%); color:#fff; border:2px solid #770000; box-shadow: 0 0 35px rgba(255,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2); transition:.22s ease; animation: pulseGlow 2s infinite; }
+.popup-card .klaim-button:hover{ transform: scale(1.08); background: linear-gradient(180deg,#ff4040 0%, #b50000 95%); box-shadow: 0 0 50px rgba(255,0,0,.7); }
 .popup-card .klaim-button img{ height: clamp(30px, 4.2vw, 46px) !important; }
+@keyframes pulseGlow{ 0%,100%{ box-shadow:0 0 30px rgba(255,0,0,.4), 0 0 60px rgba(255,0,0,.2); } 50% { box-shadow:0 0 55px rgba(255,0,0,.7), 0 0 85px rgba(255,0,0,.3); } }
 
-/* glow berdenyut halus */
-@keyframes pulseGlow{
-  0%,100%{ box-shadow:0 0 30px rgba(255,0,0,.4), 0 0 60px rgba(255,0,0,.2); }
-  50%    { box-shadow:0 0 55px rgba(255,0,0,.7), 0 0 85px rgba(255,0,0,.3); }
-}
-
-/* mobile fine-tune */
-@media (max-width:600px){
-  .popup-card{ width:92vw; padding:36px 18px; }
-  .pop-stack{ padding:16px; }
-}
+@media (max-width:600px){ .popup-card{ width:92vw; padding:36px 18px; } .pop-stack{ padding:16px; } }
 
 .popup-card .klaim-button:hover{ background:#e61919; }
 
 /* ======= Popup History ======= */
-#historyContent{
-  text-align:left;
-  max-height:60vh; overflow:auto;
-  font-size:16px;
-}
-.close-x{
-  position:absolute; top:10px; right:12px;
-  width:36px; height:36px; border-radius:50%;
-  background:#111; color:#fff; border:1px solid #333;
-  display:flex; align-items:center; justify-content:center;
-  font-weight:900; cursor:pointer;
-}
+#historyContent{ text-align:left; max-height:60vh; overflow:auto; font-size:16px; }
+.close-x{ position:absolute; top:10px; right:12px; width:36px; height:36px; border-radius:50%; background:#111; color:#fff; border:1px solid #333; display:flex; align-items:center; justify-content:center; font-weight:900; cursor:pointer; }
 .close-x:hover{ filter:brightness(1.2); }
 
 /* ================== RESPONSIVE EXTRA ================== */
 @media (max-width:600px){
   .fixed-judul{ top:74px; }
   .box-toolbar{ gap:12px; }
-  .box-toolbar button{
-    height: clamp(46px, 12vw, 58px);
-    padding: 0 clamp(14px, 4.4vw, 26px);
-    font-size: clamp(14.5px, 3.6vw, 17px);
-  }
+  .box-toolbar button{ height: clamp(46px, 12vw, 58px); padding: 0 clamp(14px, 4.4vw, 26px); font-size: clamp(14.5px, 3.6vw, 17px); }
   .box-container{ max-width:94vw; }
   .box{ width: clamp(140px, 28vw, 180px); height: clamp(140px, 28vw, 180px); }
   .box svg{ width: clamp(64px, 9vw, 96px); height: clamp(90px, 12vw, 128px); }
@@ -359,19 +203,13 @@ html, body{
 
 /* ==== Paksa warna teks di popup HISTORY jadi hitam ==== */
 #popupHistory .popup-card { color:#111; }
-
-#historyContent,
-#historyContent * {
-  color:#111 !important;   /* override semua turunan jadi hitam */
-}
-
-/* (opsional) kalau ada text “gold” ingin tetap beda */
+#historyContent, #historyContent * { color:#111 !important; }
 #historyContent [style*="color:gold"] { color:#b8860b !important; }
-
-/* (opsional) warna link */
 #historyContent a { color:#111 !important; text-decoration: underline; }
 
-
+/* loading dots util (dipakai tombol) */
+.loading-dots::after { content: ''; display: inline-block; animation: dotsAnim 1s steps(3, end) infinite; }
+@keyframes dotsAnim { 0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'} }
   </style>
 </head>
 
@@ -394,17 +232,17 @@ html, body{
     <input type="text" id="nama" placeholder="USERNAME"/>
     <input type="text" id="kode" placeholder="KODE TOKEN"/>
     <button id="btnVerifikasi" type="button">🔒 <span id="btnText">MULAI VERIFIKASI</span></button>
+    <div id="hasil" style="min-height:28px;margin-top:4px;font-weight:700"></div>
   </div>
 
   <div id="boxPage" style="display:none;">
     <div class="stage">
-<div class="box-toolbar">
-  <button onclick="tampilkanHistoryGabungan()">📜 <span id="textHistori"> CEK HISTORY </span></button>
-  <button onclick="cekPopup()">🔎 CEK POPUP</button>
-</div>
+      <div class="box-toolbar">
+        <button onclick="tampilkanHistoryGabungan()">📜 <span id="textHistori"> CEK HISTORY </span></button>
+        <button onclick="cekPopup()">🔎 CEK POPUP</button>
+        <button onclick="kembaliKeForm()">🔙 KEMBALI</button>
+      </div>
 
-
-      <!-- historyBox dihapus: sekarang pakai popup -->
       <div class="wrapper">
         <div class="box-container" id="boxArea">
           <div class="box" onclick="pilihBox(this)"></div>
@@ -420,8 +258,6 @@ html, body{
       </div>
     </div>
   </div>
-
-  <div id="hasil"></div>
 
   <!-- POPUP HADIAH -->
   <div id="popupHadiah" class="popup">
@@ -457,20 +293,7 @@ html, body{
   </div>
 
   <script>
-    const API = "https://script.google.com/macros/s/AKfycbx9-kv79wzrV4ZFWpODh1YXqnkpkiUt0qoNI61WbUSN-wxYFRjlEl-imsGp2v9krHhKsg/exec";
-async function apiGet(qs) {
-  const res = await fetch(`${API}?${qs}`, { method: "GET" });
-  return res.json();
-}
-async function apiPost(formObj) {
-  const res = await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
-    body: new URLSearchParams(formObj)
-  });
-  return res.json();
-}
-/* SVG & util */
+/* ================== SVG & UTIL ================== */
 const COFFIN_SVG = `
 <svg viewBox="0 0 256 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   <path d="M128 8 40 64 24 152l64 192h80l64-192-16-88z" fill="#0B0B0B"/>
@@ -481,53 +304,83 @@ const COFFIN_SVG = `
 const byId = id => document.getElementById(id);
 const setAllCoffins = () => document.querySelectorAll('.box').forEach(el => el.innerHTML = COFFIN_SVG);
 
-/* Reset */
+/* ================== API FETCH (tetap dipakai) ================== */
+const API = "https://script.google.com/macros/s/AKfycbzYzGwZ5tuLljWNGeKl5M65t_Hi6mpUNppE-BXxzf7oil2ShWdxgJdRB9C2ln0KdA9O/exec";
+async function apiGet(qs){ const r = await fetch(`${API}?${qs}`,{method:'GET'}); return r.json(); }
+async function apiPost(obj){ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams(obj)}); return r.json(); }
+
+// Abstraksi fungsi: mirip google.script.run.* tapi via fetch
+const GAS = {
+  async cekDanPakaiToken(nama,kode){
+    const res = await apiPost({action:'cekdanpakaitoken', nama:nama, kode:kode});
+    // normalisasi: terima {status:"OK"} atau string "OK"
+    return (res && (res.status==='OK' || res === 'OK')) ? 'OK' : (res.msg || res.status || 'Kode tidak valid');
+  },
+  async getSisaHadiah(){
+    const res = await apiGet('action=getSisaHadiah');
+    return Array.isArray(res) ? res : (res.data || []);
+  },
+  async getTipeKupon(nama){
+    const res = await apiGet('action=getTipeKupon&nama=' + encodeURIComponent(nama));
+    return (res && res.tipe) ? res.tipe : (res || 'kuponA');
+  },
+  async simpanHasil(payload){
+    try{ await apiPost({action:'simpanhasil', ...payload}); }catch(e){}
+  },
+  async ambilHistoriGabungan(nama){
+    const res = await apiGet('action=ambilHistoriGabungan&nama=' + encodeURIComponent(nama));
+    return res || {member:[], fake:[]};
+  }
+};
+
+/* ================== STATE ================== */
+let namaUser="", kodeToken="", hadiahUtama="", indexDipilih=-1, hadiahLain=[], sudahSpin=false;
+
+/* ================== RESET ================== */
 function resetBoxesAll(){
-  document.querySelectorAll('.box').forEach(b=>{
-    b.className='box'; b.removeAttribute('style'); b.innerHTML=COFFIN_SVG;
-  });
+  document.querySelectorAll('.box').forEach(b=>{ b.className='box'; b.removeAttribute('style'); b.innerHTML=COFFIN_SVG; });
   sudahSpin=false; indexDipilih=-1; hadiahLain=[]; hadiahUtama='';
 }
 
-/* Audio safe */
+/* ================== AUDIO SAFE ================== */
 function unlockAllSfxOnce(){ const ids=['sfxDrumBand','sfxRobek','sfxWin']; ids.forEach(id=>{ const a=byId(id); if(!a) return; a.muted=true; a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false;}).catch(()=>{a.muted=false;}); }); }
 ['pointerdown','touchstart','click','keydown'].forEach(evt=>{ window.addEventListener(evt,unlockAllSfxOnce,{once:true,passive:true}); });
 function playWithRetry(el,vol=.9){ if(!el) return; el.loop=el.loop||false; el.volume=vol; el.currentTime=0; return el.play().catch(()=>{ unlockAllSfxOnce(); return el.play().catch(()=>{}); }); }
 function playLoop(id,vol=.9){ const a=byId(id); if(!a)return; a.loop=true; return playWithRetry(a,vol); }
 function stopLoop(id,ms=250){ const a=byId(id); if(!a)return; a.loop=false; const start=a.volume||.9; const step=start/Math.max(1,Math.round(ms/50)); const iv=setInterval(()=>{ a.volume=Math.max(0,a.volume-step); if(a.volume<=.01){ clearInterval(iv); a.pause(); a.currentTime=0; a.volume=start; }},50); }
 
-/* Popup close (klik di luar kartu) */
+/* ================== POPUP CLOSE AREA ================== */
 byId("popupHadiah").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHadiah").style.display="none"; });
 byId("popupHistory").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHistory").style.display="none"; });
 
-let namaUser="", kodeToken="", hadiahUtama="", indexDipilih=-1, hadiahLain=[], sudahSpin=false;
-
-/* Start / Verif */
-function spinStart(){
+/* ================== START / VERIF ================== */
+async function spinStart(){
   resetBoxesAll();
   namaUser=byId("nama").value.trim();
   kodeToken=byId("kode").value.trim();
   const btnText=byId("btnText");
-  btnText.innerText="MEMPROSES"; btnText.classList.add("loading-dots");
-  byId("hasil").innerHTML="";
+  const hasil=byId('hasil');
+  btnText.innerText="MEMPROSES"; btnText.classList.add("loading-dots"); hasil.innerHTML="";
+
   if(!namaUser||!kodeToken){
     alert("Isi nama dan kode token dulu!");
     btnText.innerText="MULAI VERIFIKASI"; btnText.classList.remove("loading-dots"); return;
   }
-  google.script.run.withSuccessHandler(function(res){
-    btnText.innerText="MULAI VERIFIKASI"; btnText.classList.remove("loading-dots");
-    if(res==="OK"){
-      byId("formPage").style.display="none";
-      byId("boxPage").style.display="block";
-      byId("boxArea").style.display="grid";
-      resetBoxesAll();
-    }else{
-      byId("hasil").innerHTML=`<span style="font-weight:800;">${res}</span>`;
-    }
-  }).cekDanPakaiToken(namaUser,kodeToken);
+
+  const res = await GAS.cekDanPakaiToken(namaUser,kodeToken).catch(()=>"Error koneksi");
+  btnText.innerText="MULAI VERIFIKASI"; btnText.classList.remove("loading-dots");
+
+  if(res==='OK'){
+    byId("formPage").style.display="none";
+    byId("boxPage").style.display="block";
+    byId("boxArea").style.display="grid";
+    resetBoxesAll();
+  }else{
+    hasil.innerHTML = `<span style="color:#ffd54f;">❌ ${res}</span>`;
+  }
 }
 
-/* Buka semua box */
+/* ================== BUKA SEMUA BOX ================== */
 function bukaSemuaBox(){
   const boxes=document.querySelectorAll(".box");
   boxes.forEach(box=>{ box.innerHTML=''; box.classList.remove("terbuka"); box.style=''; });
@@ -560,35 +413,23 @@ function bukaSemuaBox(){
   });
 }
 
+/* ================== CEK POPUP QUICK ================== */
 function cekPopup(){
   const hadiah = byId('popupHadiah');
   const history = byId('popupHistory');
   const hadiahContent = byId('popupContent');
-
-  // Kalau popup hadiah sudah punya isi, tampilkan itu dulu
   const hasHadiah = hadiahContent && hadiahContent.textContent.trim().length > 0;
-
-  if (hasHadiah) {
-    hadiah.style.display = 'flex';
-    return;
-  }
-
-  // Kalau belum ada konten hadiah, coba tampilkan History.
+  if (hasHadiah) { hadiah.style.display = 'flex'; return; }
   const user = (byId('nama')?.value || '').trim();
-  if (user) {
-    // Panggil fungsi yang sudah ada untuk tarik data history dan munculkan popup-nya
-    tampilkanHistoryGabungan();
-  } else {
-    // Fallback: kasih info dulu di popup history
-    byId('historyContent').innerHTML =
-      "<p style='color:#c00;font-weight:700;margin:0'>Belum ada popup hadiah untuk ditampilkan.<br>Masukkan nama, lalu cek histori.</p>";
+  if (user) { tampilkanHistoryGabungan(); }
+  else {
+    byId('historyContent').innerHTML = "<p style='color:#c00;font-weight:700;margin:0'>Belum ada popup hadiah untuk ditampilkan.<br>Masukkan nama, lalu cek histori.</p>";
     history.style.display = 'flex';
   }
 }
 
-
-/* Pilih satu box — flip infinite sampai data siap */
-function pilihBox(el){
+/* ================== PILIH BOX ================== */
+async function pilihBox(el){
   if(sudahSpin) return; sudahSpin=true;
 
   const boxes=document.querySelectorAll(".box");
@@ -599,103 +440,98 @@ function pilihBox(el){
   el.style.pointerEvents="none";
   playLoop('sfxDrumBand',.8);
 
-  let watchdog=setTimeout(()=>{
-    el.classList.remove("flip-spin");
-    el.classList.add("clicked");
+  let watchdog=setTimeout(()=>{ el.classList.remove("flip-spin"); el.classList.add("clicked"); stopLoop('sfxDrumBand',400); },8000);
+
+  // Ambil 9 isi lain
+  hadiahLain = await GAS.getSisaHadiah().catch(()=>[]);
+  while(hadiahLain.length<9) hadiahLain.push(3000);
+
+  // Ambil tipe kupon untuk range hadiah
+  const tipe = await GAS.getTipeKupon(namaUser).catch(()=>"kuponA");
+  let hadiah=10;
+  if(tipe==="kuponA") hadiah=[2500,3000,3500][Math.floor(Math.random()*3)];
+  else if(tipe==="kuponB") hadiah=[4000,4500,5000,5500][Math.floor(Math.random()*4)];
+  else hadiah=[3000,4000,5000][Math.floor(Math.random()*3)];
+  hadiahUtama=`Rp${hadiah.toLocaleString('id-ID')}`;
+
+  clearTimeout(watchdog);
+  el.classList.remove("flip-spin");
+  el.classList.add("clicked");
+
+  setTimeout(async ()=>{
+    bukaSemuaBox();
     stopLoop('sfxDrumBand',400);
-  },8000);
+    GAS.simpanHasil({nama:namaUser,kode:kodeToken,status:hadiahUtama});
 
-  google.script.run.withSuccessHandler(function(data){
-    hadiahLain=data;
-    google.script.run.withSuccessHandler(function(tipe){
-      let hadiah=10;
-      if(tipe==="kuponA") hadiah=[2500,3000,3500][Math.floor(Math.random()*3)];
-      else if(tipe==="kuponB") hadiah=[4000,4500,5000,5500][Math.floor(Math.random()*4)];
-      hadiahUtama=`Rp${hadiah.toLocaleString()}`;
+    byId("popupContent").innerHTML = `
+      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
+      <div>🎉</div>
+      <strong class="win-amount">MENANG ${hadiahUtama}</strong>
+      <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
+    `;
 
-      clearTimeout(watchdog);
-      el.classList.remove("flip-spin");
-      el.classList.add("clicked");
-
-      setTimeout(()=>{
-        bukaSemuaBox();
-        stopLoop('sfxDrumBand',400);
-        google.script.run.simpanHasil({nama:namaUser,kode:kodeToken,status:hadiahUtama});
-
-byId("popupContent").innerHTML = `
-  <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
-  <div>🎉</div>
-  <strong class="win-amount">MENANG ${hadiahUtama}</strong>
-  <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
-`;
-
-        setTimeout(()=>{
-          byId("popupHadiah").style.display="flex";
-          const w=byId('sfxWin'); if(w) playWithRetry(w,1);
-        },300);
-      },350);
-
-    }).getTipeKupon(namaUser);
-  }).getSisaHadiah();
+    setTimeout(()=>{
+      byId("popupHadiah").style.display="flex";
+      const w=byId('sfxWin'); if(w) playWithRetry(w,1);
+    },300);
+  },350);
 }
 
-/* HISTORY → tampil sebagai POPUP */
-function tampilkanHistoryGabungan(){
+/* ================== HISTORY (popup) ================== */
+async function tampilkanHistoryGabungan(){
   const user = byId("nama").value.trim();
   const userLC = user.toLowerCase();
   const btnLbl = byId("textHistori");
-  let dot = 0;
-  const iv = setInterval(()=>{ dot=(dot+1)%4; btnLbl.innerText = "LOADING" + ".".repeat(dot); }, 500);
+  let dot = 0; const iv = setInterval(()=>{ dot=(dot+1)%4; btnLbl.innerText = "LOADING" + ".".repeat(dot); }, 500);
 
   if (!user) {
-    clearInterval(iv); btnLbl.innerText = "CEK HISTORI";
+    clearInterval(iv); btnLbl.innerText = "CEK HISTORY";
     byId("historyContent").innerHTML = "<p style='color:#c00;font-weight:700'>❌ Masukkan nama dulu sebelum cek histori!</p>";
     byId("popupHistory").style.display = "flex";
     return;
   }
 
-  google.script.run.withSuccessHandler(function (data) {
-    clearInterval(iv); btnLbl.innerText = "CEK HISTORI";
+  const data = await GAS.ambilHistoriGabungan(user).catch(()=>({member:[],fake:[]}));
+  clearInterval(iv); btnLbl.innerText = "CEK HISTORY";
 
-    let myRows = (data.member || []).filter(r => (r.nama || '').toLowerCase() === userLC);
-    let myLatest = myRows.length ? myRows[myRows.length - 1] : null;
+  let myRows = (data.member || []).filter(r => (r.nama || '').toLowerCase() === userLC);
+  let myLatest = myRows.length ? myRows[myRows.length - 1] : null;
 
-    let html = `
-      <div style="margin-bottom:10px;padding:8px;background:linear-gradient(to right,#ffcc00,#ff9900);color:#000;font-weight:bold;border-radius:6px;">
-        🥇 Kemenangan mulai dari Rp3.000 – Rp1.000.000 💰
+  let html = `
+    <div style="margin-bottom:10px;padding:8px;background:linear-gradient(to right,#ffcc00,#ff9900);color:#000;font-weight:bold;border-radius:6px;">
+      🥇 Kemenangan mulai dari Rp3.000 – Rp1.000.000 💰
+    </div>
+  `;
+  if (myLatest) {
+    html += `
+      <div style="margin:6px 0 14px 0; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg,#2a2210,#3b2b00); border:1px solid #FFC107; box-shadow:0 0 12px rgba(255,193,7,.35);">
+        🔥 Terbaru untuk kamu:<br>
+        <span style="color:#FFD54F">@${myLatest.nama}</span>
+        <span style="opacity:.7"> memenangkan </span>
+        <span style="color:#FFC107">${formatRupiah(myLatest.status)}</span>
       </div>
     `;
-    if (myLatest) {
-      html += `
-        <div style="margin:6px 0 14px 0; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg,#2a2210,#3b2b00); border:1px solid #FFC107; box-shadow:0 0 12px rgba(255,193,7,.35);">
-          🔥 Terbaru untuk kamu:<br>
-          <span style="color:#FFD54F">@${myLatest.nama}</span>
-          <span style="opacity:.7"> memenangkan </span>
-          <span style="color:#FFC107">${formatRupiah(myLatest.status)}</span>
-        </div>
-      `;
-    }
-    html += `<h4 style="margin:8px 0 6px 0;">🧾 Riwayat Anda</h4>`;
-    if (data.member && data.member.length) {
-      html += `<ul style="padding-left:18px;line-height:1.6;">`;
-      data.member.forEach(row => {
-        const isMe = (row.nama || '').toLowerCase() === userLC;
-        html += `<li${isMe ? ' style="background:rgba(255,193,7,.12);border-left:3px solid #FFC107;padding:2px 6px;border-radius:6px;"':''}>✅ <strong>${row.nama}</strong> menang <span style="color:gold;">${formatRupiah(row.status)}</span></li>`;
-      });
-      html += `</ul>`;
-    } else {
-      html += `<div style="opacity:.8;margin-bottom:8px;">Belum ada riwayat atas nama <b>${user}</b>.</div>`;
-    }
-    html += `<h4 style="margin:10px 0 6px 0;">🏆 Pemenang Hari Ini</h4>`;
-    if (data.fake && data.fake.length) {
-      html += `<ul style="padding-left:18px;line-height:1.6;">`;
-      data.fake.forEach(txt => { html += `<li>🏆 ${txt}</li>`; });
-      html += `</ul>`;
-    } else { html += `<div style="opacity:.8">Belum ada data pemenang.</div>`; }
+  }
+  html += `<h4 style="margin:8px 0 6px 0;">🧾 Riwayat Anda</h4>`;
+  if (data.member && data.member.length) {
+    html += `<ul style="padding-left:18px;line-height:1.6;">`;
+    data.member.forEach(row => {
+      const isMe = (row.nama || '').toLowerCase() === userLC;
+      html += `<li${isMe ? ' style="background:rgba(255,193,7,.12);border-left:3px solid #FFC107;padding:2px 6px;border-radius:6px;"':''}>✅ <strong>${row.nama}</strong> menang <span style="color:gold;">${formatRupiah(row.status)}</span></li>`;
+    });
+    html += `</ul>`;
+  } else {
+    html += `<div style="opacity:.8;margin-bottom:8px;">Belum ada riwayat atas nama <b>${user}</b>.</div>`;
+  }
+  html += `<h4 style="margin:10px 0 6px 0;">🏆 Pemenang Hari Ini</h4>`;
+  if (data.fake && data.fake.length) {
+    html += `<ul style="padding-left:18px;line-height:1.6;">`;
+    data.fake.forEach(txt => { html += `<li>🏆 ${txt}</li>`; });
+    html += `</ul>`;
+  } else { html += `<div style="opacity:.8">Belum ada data pemenang.</div>`; }
 
-    byId("historyContent").innerHTML = html;
-    byId("popupHistory").style.display = "flex";
-  }).ambilHistoriGabungan(user);
+  byId("historyContent").innerHTML = html;
+  byId("popupHistory").style.display = "flex";
 }
 
 function formatRupiah(val){
@@ -705,7 +541,16 @@ function formatRupiah(val){
   return 'Rp ' + n.toLocaleString('id-ID');
 }
 
+function kembaliKeForm(){
+  byId("formPage").style.display="block";
+  byId("boxPage").style.display="none";
+  byId("popupHadiah").style.display="none";
+  byId("popupHistory").style.display="none";
+  resetBoxesAll();
+  setAllCoffins();
+}
 
+/* ================== DOM READY ================== */
 document.addEventListener('DOMContentLoaded',function(){
   const btn=byId('btnVerifikasi');
   setAllCoffins();
@@ -715,10 +560,7 @@ document.addEventListener('DOMContentLoaded',function(){
   });
   if(btn) btn.addEventListener('click',()=>blurThenReset(()=>spinStart()));
   document.addEventListener('touchend',e=>{ if(!e.target.closest('input,textarea,select,button')) blurThenReset(); },{passive:true});
-  function blurThenReset(next){
-    const a=document.activeElement; if(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) a.blur();
-    setTimeout(()=>{ window.scrollTo(0,0); if(typeof next==='function') next(); },300);
-  }
+  function blurThenReset(next){ const a=document.activeElement; if(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) a.blur(); setTimeout(()=>{ window.scrollTo(0,0); if(typeof next==='function') next(); },300); }
   if(btn) btn.addEventListener('click',unlockAllSfxOnce,{once:true});
 });
   </script>
