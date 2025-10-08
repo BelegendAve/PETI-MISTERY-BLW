@@ -668,14 +668,15 @@ document.addEventListener('DOMContentLoaded',function(){
     async getTipeKupon(nama){
       return _fetchJSON(`${API_BASE}?action=getTipeKupon&nama=${encodeURIComponent(nama)}`);
     },
-    async simpanHasil(payload){
-      return _fetchJSON(`${API_BASE}?action=simpanHasil`, {
-        method:'POST',
-        headers:{'Content-Type':'application/json'},
-        body: JSON.stringify(payload)
-      });
-    }
-  };
+// sebelumnya: headers: {'Content-Type':'application/json'}
+async function simpanHasil(payload){
+  return _fetchJSON(`${API_BASE}?action=simpanHasil`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // <= ini kuncinya
+    body: JSON.stringify(payload)
+  });
+}
+
 
   /* Emulasi google.script.run supaya kode lama tetap jalan 1:1 */
   (function attachGoogleRunShim(){
