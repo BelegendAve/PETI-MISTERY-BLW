@@ -312,11 +312,10 @@ async function gasGet(qs){
   return res.json(); // { ok, data } / { ok:false, error:{message} }
 }
 
-// POST JSON -> doPost(action='simpanHasil'): respon { ok: true, data: ... }
 async function gasPost(action, payload){
   const res = await fetch(`${API}?action=${encodeURIComponent(action)}`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // simple request, tanpa preflight
     body: JSON.stringify({ action, ...payload })
   });
   return res.json();
