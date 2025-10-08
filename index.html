@@ -240,7 +240,6 @@ stage{ margin-top: var(--stage-offset); }
       <div class="box-toolbar">
         <button onclick="tampilkanHistoryGabungan()">📜 <span id="textHistori"> CEK HISTORY </span></button>
         <button onclick="cekPopup()">🔎 CEK POPUP</button>
-        <button onclick="kembaliKeForm()">🔙 KEMBALI</button>
       </div>
 
       <div class="wrapper">
@@ -559,15 +558,6 @@ function formatRupiah(val){
   if (/rp/i.test(String(val))) return val;
   const n = parseInt(String(val).replace(/[^\d]/g,''))||0;
   return 'Rp ' + n.toLocaleString('id-ID');
-}
-
-function kembaliKeForm(){
-  byId("formPage").style.display="block";
-  byId("boxPage").style.display="none";
-  byId("popupHadiah").style.display="none";
-  byId("popupHistory").style.display="none";
-  resetBoxesAll();
-  setAllCoffins();
 }
 
 /* ================== DOM READY ================== */
