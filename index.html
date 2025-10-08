@@ -120,7 +120,7 @@ html, body{
 .box-toolbar{
   display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
   max-width: var(--grid-w); margin:8px auto 10px; padding:6px 0;
-  position:relative; z-index:10; /* di atas GIF */
+  position:relative; z-index:13; /* di atas grid & GIF */
 }
 .box-toolbar button{
   height:44px; padding:0 18px; font-size:14px; font-weight:800; border-radius:9999px;
@@ -130,18 +130,22 @@ html, body{
 }
 
 /* ============== GRID PETI ============== */
-#boxPage{ display:none; flex:1 1 auto; overflow:hidden; }
+#boxPage{ display:none; flex:1 1 auto; overflow:visible; }
 .stage{
   margin-top: var(--header-total);
   height: calc(100dvh - var(--header-total));
-  display:flex; flex-direction:column; overflow:hidden;
-  align-items:center; position:relative; z-index:9; /* di atas GIF */
+  display:flex; flex-direction:column;
+  align-items:center; position:relative;
+  overflow: visible;     /* jangan potong grid */
+  z-index:10;            /* di atas GIF */
 }
 .wrapper{
   flex:1 1 auto; width:100%;
   display:flex; justify-content:center; align-items:center;
-  overflow:hidden;
-  padding-bottom: 110px; /* ruang buat GIF bawah */
+  overflow: visible;      /* <— penting: biar shadow/sisi grid tidak kepotong */
+  padding-bottom: 110px;  /* ruang buat GIF bawah */
+  position: relative;
+  z-index:10;
 }
 @media (max-width:480px){ .wrapper{ padding-bottom:118px; } }
 @media (min-width:900px){ .wrapper{ padding-bottom:60px; } }
@@ -150,6 +154,8 @@ html, body{
   display:grid; grid-template-columns: repeat(3, var(--box-size));
   gap:18px; justify-content:center; align-content:center;
   transform-origin:center;
+  position: relative;
+  z-index:11;            /* di atas wrapper */
 }
 /* layar pendek -> skala turun supaya tetap muat */
 @media (max-height:620px){ .box-container{ transform: scale(.92); } }
@@ -160,6 +166,8 @@ html, body{
   background:#151515; border:2px solid #400; border-radius:16px;
   display:flex; align-items:center; justify-content:center; transition:.25s ease;
   backface-visibility:hidden; transform-style:preserve-3d;
+  position: relative;
+  z-index:12;            /* kartu paling atas */
 }
 .box:hover{ transform:scale(1.04); box-shadow:0 0 18px rgba(200,0,0,.6); border-color:#d00; }
 .box svg{ width: clamp(64px, 9vw, 110px); height: clamp(90px, 12vw, 150px); filter:drop-shadow(0 0 6px rgba(255,0,0,.7)); }
@@ -194,9 +202,9 @@ html, body{
 #popupContent, #popupContent * { color:#111 !important; }
 #popupContent b { color:#000 !important; }
 
-/* ============== GIF BAWAH (dibikin di bawah konten) ============== */
-#gif-left{ position:fixed; left:8px; bottom:6px; width:110px; opacity:.95; pointer-events:none; z-index:3; }
-#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:3; }
+/* ============== GIF BAWAH (di bawah konten) ============== */
+#gif-left{ position:fixed; left:8px; bottom:6px; width:110px; opacity:.95; pointer-events:none; z-index:2; }
+#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:2; }
 #gif-right-wrap img:first-child{ width:160px; display:block; }
 #gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; }
   </style>
@@ -270,7 +278,7 @@ html, body{
     </div>
   </div>
 
-  <!-- GIF POJOK -->
+  <!-- GIF POJOK (layer lebih rendah) -->
   <img id="gif-left" src="https://media.tenor.com/s-6xMGhtfssAAAAi/c%C6%B0%E1%BB%9Di-kh%C3%B4ng-c%C3%B3g%C3%AC.gif" alt="">
   <div id="gif-right-wrap">
     <img src="https://media.tenor.com/Bvj4YBWQ6MIAAAAi/sluggish-slayer.gif" alt="">
