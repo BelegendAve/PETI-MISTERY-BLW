@@ -6,11 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
   <style>
-/* ================= NO SCROLL GLOBAL ================= */
+/* ================== NO SCROLL GLOBAL ================== */
 html, body{
   margin:0; padding:0;
-  height:100dvh;              /* viewport dinamis, aman di mobile */
-  overflow:hidden !important; /* buang scroll vertikal & horizontal */
+  height:100dvh;
+  overflow:hidden !important;
   overscroll-behavior:none;
   touch-action:manipulation;
   font-family:'Segoe UI',sans-serif; color:#fff; text-align:center;
@@ -19,53 +19,64 @@ html, body{
     linear-gradient(180deg,#0d0d0d 0%,#000 100%);
 }
 
-/* ================= VAR ================= */
+/* ================== VAR ================== */
 :root{
   --grid-w: min(1200px, 96vw);
-  --judul-board-h: 60px;
-  --stage-offset: 150px;               /* jarak konten dari atas (pas tanpa scroll) */
-  --box-size: clamp(120px, 26vw, 160px);
+  --judul-icon-size: 58px;
+  --judul-icon-gap: 16px;
+  --judul-board-h: 58px;
+  --stage-offset: 132px;              /* naikin grid biar gak nabrak GIF bawah */
+  --box-size: clamp(116px, 27vw, 160px);
 }
 @media (max-width:600px){
   :root{
-    --judul-board-h: 50px;
-    --stage-offset: 130px;
-    --box-size: clamp(96px, 28vw, 140px);
+    --judul-icon-size: 46px;
+    --judul-board-h: 52px;
+    --stage-offset: 120px;
+    --box-size: clamp(104px, 29vw, 140px);
   }
 }
 
-/* ================= BANNER & JUDUL (fixed) ================= */
+/* ================== BANNER & JUDUL (fixed) ================== */
 .banner-berjalan{
   position:fixed; top:0; left:0; z-index:9999;
   width:100%; padding:6px 0; font-size:13px; font-weight:700;
   background:#111; border-bottom:2px solid #b30000;
 }
-.fixed-judul{
-  position:fixed; top:58px; left:0; width:100%; z-index:9998; padding:8px 0 12px;
-}
+
+.fixed-judul{ position:fixed; top:58px; left:0; width:100%; z-index:9998; padding:8px 0 12px; }
 .fixed-judul::before{
   content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
   width: var(--grid-w); height: var(--judul-board-h); border-radius:14px;
   background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0)), linear-gradient(180deg,#1b0b0b,#0f0b0b);
   border:1px solid #6a0000; box-shadow:0 10px 30px rgba(255,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06); opacity:.95; z-index:-1;
 }
+
+/* judul + GIF malaikat maut kiri/kanan (BALIK LAGI) */
+.judul-ikon{
+  position:relative; display:inline-block;
+  padding:0 calc(var(--judul-icon-size) + var(--judul-icon-gap));
+}
+.judul-ikon::before, .judul-ikon::after{
+  content:""; position:absolute; top:50%; transform:translateY(-50%);
+  width:var(--judul-icon-size); height:var(--judul-icon-size);
+  background-size:contain; background-position:center; background-repeat:no-repeat;
+  filter:drop-shadow(0 0 6px rgba(255,200,0,.5)); pointer-events:none;
+}
+.judul-ikon::before{ left:8px;  background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
+.judul-ikon::after { right:8px; background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
 .fixed-judul h1{
   margin:0; font-family:'Arial Black',sans-serif; font-weight:900;
   font-size:28px; letter-spacing:2px; color:#ffcc00; text-shadow:0 0 8px #b30000, 2px 2px 0 #000;
 }
 @media (max-width:600px){ .fixed-judul h1{ font-size:24px; } }
 
-/* ================= KANVAS APP (tanpa scroll) ================= */
-.app{
-  height:100dvh;                       /* penuh layar */
-  display:flex; flex-direction:column;
-  overflow:hidden;                     /* jaga-jaga */
-}
+/* ================== APP WRAPPER ================== */
+.app{ height:100dvh; display:flex; flex-direction:column; overflow:hidden; }
 
-/* ================= FORM ================= */
-#formPage{ margin-top: var(--stage-offset); flex:1 0 auto; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; gap:10px; }
-#brand img{ height:68px; cursor:pointer; display:block; margin:0 auto 10px; }
-
+/* ================== FORM ================== */
+#formPage{ margin-top: var(--stage-offset); flex:1 0 auto; display:flex; flex-direction:column; align-items:center; gap:10px; }
+#brand img{ height:64px; cursor:pointer; display:block; margin:0 auto 8px; }
 .form-vertical{ display:flex; flex-direction:column; align-items:center; gap:10px; transform:translateZ(0); }
 .form-vertical input{
   width:min(90vw, 320px); height:44px; font-size:16px;
@@ -79,10 +90,10 @@ html, body{
 }
 .form-vertical button:hover{ background:#e61919; transform:scale(1.03); }
 
-/* ================= TOOLBAR GRID ================= */
+/* ================== TOOLBAR ================== */
 .box-toolbar{
   display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
-  max-width: var(--grid-w); margin:0 auto 12px; padding:6px 0;
+  max-width: var(--grid-w); margin:0 auto 10px; padding:6px 0;
 }
 .box-toolbar button{
   height:44px; padding:0 18px; font-size:14px; font-weight:800; border-radius:9999px;
@@ -91,37 +102,52 @@ html, body{
   box-shadow:0 10px 28px rgba(255,50,50,.35), inset 0 1px 0 rgba(255,255,255,.12);
 }
 
-/* ================= GRID PETI ================= */
+/* ================== GRID PETI ================== */
 #boxPage{ display:none; flex:1 1 auto; overflow:hidden; }
-.stage{ margin-top: var(--stage-offset); height: calc(100dvh - var(--stage-offset)); display:flex; flex-direction:column; overflow:hidden; }
+.stage{
+  margin-top: var(--stage-offset);
+  height: calc(100dvh - var(--stage-offset));
+  display:flex; flex-direction:column; overflow:hidden;
+}
 .wrapper{ flex:1 1 auto; display:flex; justify-content:center; align-items:center; overflow:hidden; }
 .box-container{
   display:grid; grid-template-columns: repeat(3, var(--box-size));
   gap:18px; justify-content:center; align-content:center;
-  /* supaya selalu muat di layar tanpa scroll, kalau mepet akan diperkecil */
   transform-origin:center;
 }
-@media (max-height:620px){
-  .box-container{ transform: scale(.92); }
-}
-@media (max-height:560px){
-  .box-container{ transform: scale(.86); }
-}
+/* kalau layar pendek, kecilin dikit supaya tetap muat tanpa scroll */
+@media (max-height:620px){ .box-container{ transform: scale(.92); } }
+@media (max-height:560px){ .box-container{ transform: scale(.86); } }
+
 .box{
   width:var(--box-size); height:var(--box-size);
   background:#151515; border:2px solid #400; border-radius:16px;
   display:flex; align-items:center; justify-content:center; transition:.25s ease;
+  backface-visibility:hidden; transform-style:preserve-3d;
 }
 .box:hover{ transform:scale(1.04); box-shadow:0 0 18px rgba(200,0,0,.6); border-color:#d00; }
 .box svg{ width: clamp(64px, 9vw, 110px); height: clamp(90px, 12vw, 150px); filter:drop-shadow(0 0 6px rgba(255,0,0,.7)); }
 
-/* ================= NOMINAL ================= */
+/* ====== ANIMASI BOX (BALIK LAGI) ====== */
+@keyframes robekAnim{0%{transform:scale(1)}30%{transform:scale(1.06) rotate(1deg)}60%{transform:scale(1) rotate(-1deg)}100%{transform:scale(1.02)}}
+.box.terbuka{ animation:robekAnim .25s ease forwards; border:3px solid #b30000; }
+
+@keyframes flipLoop{0%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
+.box.flip-spin{ animation: flipLoop .5s linear infinite; }
+
+@keyframes flipBox{
+  0%,20%,40%,60%,80%,100%{transform:rotateY(0)}
+  10%,30%,50%,70%,90%{transform:rotateY(180deg)}
+}
+.box.clicked{ animation:flipBox .9s ease-in-out; }
+
+/* ================== NOMINAL ================== */
 .isi-robek{ display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:6px; width:100%; }
 .isi-robek .icon{ font-size:20px; margin-bottom:6px; }
 .isi-robek .nominal{ font-size:18px; font-weight:800; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .isi-robek .nominal.win{ font-size:20px; color:#FFD700; }
 
-/* ================= POPUP (diperkecil) ================= */
+/* ================== POPUP (kecil) ================== */
 .popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
 .popup-card{
   position:relative; width:min(88vw, 360px); border-radius:18px; padding:20px 16px;
@@ -139,18 +165,11 @@ html, body{
 #popupContent, #popupContent * { color:#111 !important; }
 #popupContent b { color:#000 !important; }
 
-/* ================= GIF SEJAJAR BAWAH ================= */
+/* ================== GIF SEJAJAR BAWAH ================== */
 #gif-left{ position:fixed; left:8px; bottom:6px; width:110px; opacity:.95; pointer-events:none; z-index:8; }
 #gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:8; }
 #gif-right-wrap img:first-child{ width:160px; display:block; }
 #gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; }
-
-/* ================= MOBILE TWEAK ================= */
-@media (max-width:600px){
-  #brand img{ height:60px; }
-  .isi-robek .nominal{ font-size:16px; }
-  .isi-robek .nominal.win{ font-size:18px; }
-}
   </style>
 </head>
 
@@ -161,7 +180,7 @@ html, body{
     </div>
 
     <div class="fixed-judul">
-      <h1>PETI MISTERY</h1>
+      <h1 class="judul-ikon"><span>PETI MISTERY</span></h1>
     </div>
 
     <!-- FORM -->
@@ -230,7 +249,7 @@ html, body{
   </div>
 
   <script>
-/* ================= SVG & UTIL ================= */
+/* =============== SVG & UTIL =============== */
 const COFFIN_SVG = `
 <svg viewBox="0 0 256 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
   <path d="M128 8 40 64 24 152l64 192h80l64-192-16-88z" fill="#0B0B0B"/>
@@ -241,7 +260,7 @@ const COFFIN_SVG = `
 const byId = (id) => document.getElementById(id);
 const setAllCoffins = () => document.querySelectorAll('.box').forEach(el => el.innerHTML = COFFIN_SVG);
 
-/* ================= API ================= */
+/* =============== API =============== */
 const API = "https://script.google.com/macros/s/AKfycbzYzGwZ5tuLljWNGeKl5M65t_Hi6mpUNppE-BXxzf7oil2ShWdxgJdRB9C2ln0KdA9O/exec";
 async function gasGet(qs){ const res = await fetch(`${API}?${qs}`, { method: 'GET' }); return res.json(); }
 async function gasPost(action, payload){ const res = await fetch(`${API}?action=${encodeURIComponent(action)}`, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action, ...payload }) }); return res.json(); }
@@ -253,33 +272,27 @@ const GAS = {
   async ambilHistoriGabungan(nama){ const r = await gasGet(`action=ambilHistoriGabungan&nama=${encodeURIComponent(nama)}`).catch(()=>({ok:false})); return (r && r.ok && r.data) ? r.data : { member:[], fake:[] }; }
 };
 
-/* ================= STATE ================= */
+/* =============== STATE & RESET =============== */
 let namaUser="", kodeToken="", hadiahUtama="", indexDipilih=-1, hadiahLain=[], sudahSpin=false;
-
-/* ================= RESET ================= */
 function resetBoxesAll(){
   document.querySelectorAll('.box').forEach(b=>{ b.className='box'; b.removeAttribute('style'); b.innerHTML=COFFIN_SVG; });
   sudahSpin=false; indexDipilih=-1; hadiahLain=[]; hadiahUtama='';
 }
 
-/* ================= POPUP CLOSE AREA ================= */
+/* =============== POPUP CLOSE BG =============== */
 byId("popupHadiah").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHadiah").style.display="none"; });
 byId("popupHistory").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHistory").style.display="none"; });
 
-/* ================= START / VERIF ================= */
+/* =============== START / VERIF =============== */
 async function spinStart(){
   resetBoxesAll();
   namaUser=byId("nama").value.trim();
   kodeToken=byId("kode").value.trim();
-  const btnText=byId("btnText");
-  const hasil=byId('hasil');
+  const btnText=byId("btnText"); const hasil=byId('hasil');
   btnText.innerText="MEMPROSES"; hasil.innerHTML="";
-
   if(!namaUser||!kodeToken){ alert("Isi nama dan kode token dulu!"); btnText.innerText="MULAI VERIFIKASI"; return; }
-
   const res = await GAS.cekDanPakaiToken(namaUser,kodeToken).catch(()=>"Error koneksi");
   btnText.innerText="MULAI VERIFIKASI";
-
   if(res==='OK'){
     byId("formPage").style.display="none";
     byId("boxPage").style.display="block";
@@ -290,21 +303,18 @@ async function spinStart(){
   }
 }
 
-/* ================= BUKA SEMUA BOX ================= */
+/* =============== ANIMASI BUKA SEMUA BOX =============== */
 function bukaSemuaBox(){
   const boxes=document.querySelectorAll(".box");
   boxes.forEach(box=>{ box.innerHTML=''; box.classList.remove("terbuka"); box.style=''; });
-
   boxes.forEach((box,i)=>{
     setTimeout(()=>{
       box.classList.add("terbuka");
       box.style.pointerEvents="none";
-
       const isi=document.createElement("div");
       isi.classList.add("isi-robek");
       isi.style.transition="opacity .6s ease"; 
       isi.style.opacity="0";
-
       if(i===indexDipilih){
         box.style.background="#3a0000"; box.style.color="#ffd700";
         isi.innerHTML = `<div class="icon">🎯</div><div class="nominal win">${hadiahUtama}</div>`;
@@ -313,14 +323,13 @@ function bukaSemuaBox(){
         box.style.background="#0e0e0e"; box.style.color="#fff";
         isi.innerHTML = `<div class="nominal">Rp${angka.toLocaleString("id-ID")}</div>`;
       }
-
       box.appendChild(isi);
       setTimeout(()=>{ isi.style.opacity="1"; },300);
     }, i*160);
   });
 }
 
-/* ================= CEK POPUP QUICK ================= */
+/* =============== CEK POPUP QUICK =============== */
 function cekPopup(){
   const hadiah = byId('popupHadiah');
   const history = byId('popupHistory');
@@ -335,14 +344,17 @@ function cekPopup(){
   }
 }
 
-/* ================= KLIK BOX ================= */
+/* =============== KLIK BOX =============== */
 async function pilihBox(el){
   if(sudahSpin) return; sudahSpin=true;
-
   const boxes=document.querySelectorAll(".box");
   indexDipilih=[...boxes].indexOf(el);
+
+  /* efek spin sebentar */
+  el.classList.add("flip-spin");
   el.style.pointerEvents="none";
 
+  // ambil data
   hadiahLain = await GAS.getSisaHadiah().catch(()=>[]);
   while(hadiahLain.length<9) hadiahLain.push(3000);
 
@@ -353,7 +365,11 @@ async function pilihBox(el){
   else hadiah=[3000,4000,5000][Math.floor(Math.random()*3)];
   hadiahUtama=`Rp${hadiah.toLocaleString('id-ID')}`;
 
+  /* hentikan spin -> animasi flip bukaan */
   setTimeout(()=> {
+    el.classList.remove("flip-spin");
+    el.classList.add("clicked");
+
     bukaSemuaBox();
 
     byId("popupContent").innerHTML = `
@@ -364,10 +380,10 @@ async function pilihBox(el){
     byId("popupHadiah").style.display = "flex";
 
     GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true }).catch(()=>{});
-  }, 250);
+  }, 400);
 }
 
-/* ================= HISTORY (popup) ================= */
+/* =============== HISTORY (popup) =============== */
 async function tampilkanHistoryGabungan(){
   const user = byId("nama").value.trim();
   const userLC = user.toLowerCase();
@@ -430,20 +446,15 @@ function formatRupiah(val){
   return 'Rp ' + n.toLocaleString('id-ID');
 }
 
-/* ================= DOM READY ================= */
+/* =============== DOM READY =============== */
 document.addEventListener('DOMContentLoaded',function(){
   const btn=byId('btnVerifikasi');
   setAllCoffins();
   if(btn) btn.addEventListener('click',()=>spinStart());
-
-  /* pastikan tidak ada scroll sama sekali */
+  // pastikan gak ada scroll
   document.body.style.overflow='hidden';
   document.documentElement.style.overflow='hidden';
 });
   </script>
-
-  <!-- audio (opsional) -->
-  <!-- <audio id="sfxRobek" src="..." preload="auto" playsinline crossorigin="anonymous"></audio>
-  <audio id="sfxWin"   src="..." preload="auto" playsinline crossorigin="anonymous"></audio> -->
 </body>
 </html>
