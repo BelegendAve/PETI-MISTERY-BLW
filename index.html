@@ -304,32 +304,52 @@ const COFFIN_SVG = `
 const byId = id => document.getElementById(id);
 const setAllCoffins = () => document.querySelectorAll('.box').forEach(el => el.innerHTML = COFFIN_SVG);
 
-/* ================== API FETCH (tetap dipakai) ================== */
+/* ================== API FETCH (sesuai router GAS kamu) ================== */
 const API = "https://script.google.com/macros/s/AKfycbzYzGwZ5tuLljWNGeKl5M65t_Hi6mpUNppE-BXxzf7oil2ShWdxgJdRB9C2ln0KdA9O/exec";
-async function apiGet(qs){ const r = await fetch(`${API}?${qs}`,{method:'GET'}); return r.json(); }
-async function apiPost(obj){ const r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams(obj)}); return r.json(); }
 
-// Abstraksi fungsi: mirip google.script.run.* tapi via fetch
+// GET -> doGet(action=...): respon { ok: true, data: ... }
+async function gasGet(qs){
+  const res = await fetch(`${API}?${qs}`, { method: 'GET' });
+  return res.json(); // { ok, data } / { ok:false, error:{message} }
+}
+
+// POST JSON -> doPost(action='simpanHasil'): respon { ok: true, data: ... }
+async function gasPost(action, payload){
+  const res = await fetch(`${API}?action=${encodeURIComponent(action)}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ action, ...payload })
+  });
+  return res.json();
+}
+
+// Abstraksi mirip google.script.run, tapi mengikuti format {ok,data}
 const GAS = {
-  async cekDanPakaiToken(nama,kode){
-    const res = await apiPost({action:'cekdanpakaitoken', nama:nama, kode:kode});
-    // normalisasi: terima {status:"OK"} atau string "OK"
-    return (res && (res.status==='OK' || res === 'OK')) ? 'OK' : (res.msg || res.status || 'Kode tidak valid');
+  async cekDanPakaiToken(nama, kode){
+    const r = await gasGet(
+      `action=cekDanPakaiToken&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`
+    ).catch(()=>({ ok:false, error:{message:'ERR'} }));
+    if (r && r.ok && r.data === 'OK') return 'OK';
+    return (r && (r.data || r.error?.message)) || 'Kode tidak valid';
   },
+
   async getSisaHadiah(){
-    const res = await apiGet('action=getSisaHadiah');
-    return Array.isArray(res) ? res : (res.data || []);
+    const r = await gasGet('action=getSisaHadiah').catch(()=>({ok:false}));
+    return (r && r.ok && Array.isArray(r.data)) ? r.data : [];
   },
+
   async getTipeKupon(nama){
-    const res = await apiGet('action=getTipeKupon&nama=' + encodeURIComponent(nama));
-    return (res && res.tipe) ? res.tipe : (res || 'kuponA');
+    const r = await gasGet(`action=getTipeKupon&nama=${encodeURIComponent(nama)}`).catch(()=>({ok:false}));
+    return (r && r.ok && r.data) ? r.data : 'kuponA';
   },
+
   async simpanHasil(payload){
-    try{ await apiPost({action:'simpanhasil', ...payload}); }catch(e){}
+    try { await gasPost('simpanHasil', payload); } catch(e) {}
   },
+
   async ambilHistoriGabungan(nama){
-    const res = await apiGet('action=ambilHistoriGabungan&nama=' + encodeURIComponent(nama));
-    return res || {member:[], fake:[]};
+    const r = await gasGet(`action=ambilHistoriGabungan&nama=${encodeURIComponent(nama)}`).catch(()=>({ok:false}));
+    return (r && r.ok && r.data) ? r.data : { member:[], fake:[] };
   }
 };
 
