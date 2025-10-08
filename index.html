@@ -92,9 +92,8 @@ stage{ margin-top: var(--stage-offset); }
   font-weight:800;
   border-radius:9999px;
   background:linear-gradient(#e51c1c,#b50000);
-  border:1px solid #6f0000; 
-  color:#fff; 
-  letter-spacing:.2px;
+  border:1px solid #6f0000); 
+  color:#fff; letter-spacing:.2px;
   display:flex; align-items:center; justify-content:center; gap:10px;
   box-shadow:0 10px 28px rgba(255,50,50,.35), inset 0 1px 0 rgba(255,255,255,.12);
   transition:transform .15s ease, background .15s ease;
@@ -109,12 +108,12 @@ stage{ margin-top: var(--stage-offset); }
 .wrapper{ display:flex; justify-content:center; width:100%; }
 .box-container{
   display:grid;
-  grid-template-columns: repeat(3, minmax(0, var(--box-size))); /* fix: tidak melebar */
-  gap: clamp(14px, 2.2vw, 24px);
+  grid-template-columns: repeat(3, minmax(0, var(--box-size))); /* tidak melebar */
+  gap: clamp(16px, 3.6vw, 22px);          /* << jarak dibuat lebih renggang */
   padding:20px;
   max-width: var(--grid-w);
   margin: 0 auto 40px;
-  justify-content:center; /* center grid */
+  justify-content:center;
 }
 
 /* kotak square sesuai --box-size */
@@ -152,31 +151,59 @@ stage{ margin-top: var(--stage-offset); }
 }
 .isi-robek .nominal.win{ font-size: clamp(28px, 3vw, 44px); color:#FFD700; font-weight:900; }
 
-/* =============== POPUP =============== */
-.popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
-.popup-card{ position:relative; width:min(96vw, 880px); border-radius:28px; padding: clamp(48px, 7vw, 84px) clamp(28px, 4vw, 48px); background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%); border:2px solid rgba(255,0,0,.28); box-shadow: 0 0 40px rgba(255,0,0,.35), 0 26px 80px rgba(0,0,0,.6); text-align:center; transform: translateY(12px) scale(.96); opacity: 0; animation: popupIn .38s ease forwards; }
+/* =============== POPUP – DIPERKECIL =============== */
+.popup{
+  position:fixed; inset:0; background:rgba(0,0,0,.72);
+  display:none; justify-content:center; align-items:center; z-index:9999;
+}
+.popup-card{
+  position:relative;
+  width:min(88vw, 380px);               /* <<< kecil */
+  border-radius:20px;
+  padding: 24px 16px;
+  background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%);
+  border:2px solid rgba(255,0,0,.28);
+  box-shadow: 0 0 25px rgba(255,0,0,.35), 0 16px 60px rgba(0,0,0,.6);
+  text-align:center; transform: translateY(12px) scale(.96); opacity: 0;
+  animation: popupIn .38s ease forwards;
+}
 @keyframes popupIn{ to{ transform: translateY(0) scale(1); opacity:1; } }
 .popup-card .close-x{ z-index:2; }
 
 #popupContent{ margin:0; }
-.pop-stack{ display:flex; flex-direction:column; align-items:center; gap: clamp(12px, 2.2vw, 22px); padding: clamp(16px, 2.4vw, 28px); border:2px solid #ff2a2a; border-radius:16px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
-.pop-logo{ height: clamp(120px, 15vw, 180px); display:block; margin: 0 auto 4px; }
-.pop-emoji{ font-size: clamp(28px, 4vw, 42px); }
-.pop-title{ font-size: clamp(40px, 5.6vw, 68px); font-weight: 900; letter-spacing: .3px; color:#111; text-shadow: 0 1px 0 #fff; }
-.pop-title .amount{ color:#FFD700; text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45); }
-.pop-sub{ font-size: clamp(18px, 2.6vw, 24px); color:#333; font-weight:500; letter-spacing:.2px; }
+.pop-stack{ display:flex; flex-direction:column; align-items:center; gap: 12px; padding: 14px; border:2px solid #ff2a2a; border-radius:12px; box-shadow: inset 0 0 0 1px rgba(255,255,255,.08); }
+.pop-logo{ height: 80px; display:block; margin: 0 auto 4px; }
+.pop-emoji{ font-size: 26px; }
+.pop-title{ font-size: 26px; font-weight: 900; letter-spacing: .2px; color:#111; text-shadow: 0 1px 0 #fff; }
+.pop-title .amount{ color:#FFD700; text-shadow: 0 0 10px rgba(255,215,0,.8), 0 0 18px rgba(255,180,0,.45); }
+.pop-sub{ font-size: 15px; color:#333; font-weight:500; letter-spacing:.2px; }
 
-.popup-card .klaim-button{ display:flex; align-items:center; justify-content:center; gap:14px; width:100%; max-width:520px; margin: clamp(22px, 3.2vw, 34px) auto 0; padding: clamp(22px, 3vw, 28px) clamp(24px, 3.2vw, 34px); font-size: clamp(22px, 3.2vw, 32px); font-weight: 900; border-radius:20px; background: linear-gradient(180deg,#ff3030 0%, #a80000 95%); color:#fff; border:2px solid #770000; box-shadow: 0 0 35px rgba(255,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2); transition:.22s ease; animation: pulseGlow 2s infinite; }
-.popup-card .klaim-button:hover{ transform: scale(1.08); background: linear-gradient(180deg,#ff4040 0%, #b50000 95%); box-shadow: 0 0 50px rgba(255,0,0,.7); }
-.popup-card .klaim-button img{ height: clamp(30px, 4.2vw, 46px) !important; }
+.popup-card .klaim-button{
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; max-width:300px; margin: 16px auto 0;
+  padding: 12px 16px; font-size:16px; font-weight:900;
+  border-radius:14px; background: linear-gradient(180deg,#ff3030 0%, #a80000 95%);
+  color:#fff; border:2px solid #770000; box-shadow: 0 0 25px rgba(255,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2);
+  transition:.22s ease;
+}
+.popup-card .klaim-button:hover{ transform: scale(1.05); background: linear-gradient(180deg,#ff4040 0%, #b50000 95%); box-shadow: 0 0 40px rgba(255,0,0,.6); }
+.popup-card .klaim-button img{ height: 22px !important; }
 
-/* =============== GIF POJOK =============== */
+/* tombol close */
+.close-x{
+  position:absolute; top:8px; right:8px; width:28px; height:28px;
+  border-radius:50%; background:#111; color:#fff; border:1px solid #333;
+  display:flex; align-items:center; justify-content:center; font-weight:900; cursor:pointer;
+}
+.close-x:hover{ filter:brightness(1.2); }
+
+/* =============== GIF POJOK (SEJAJAR) =============== */
 #gif-left{
   position:fixed; left:10px; bottom:6px; width:140px; opacity:.9; pointer-events:none; z-index:8;
 }
-#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:8; }
+#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:8; }   /* <<< sama bottom-nya */
 #gif-right-wrap img:first-child{ width:220px; display:block; }
-#gif-right{ position:absolute; bottom:18px; left:50%; transform:translateX(-50%); width:110px; }
+#gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:110px; } /* <<< ditempel bawah */
 
 /* =============== RESPONSIVE – MOBILE (≤600px) =============== */
 @media (max-width:600px){
@@ -191,13 +218,19 @@ stage{ margin-top: var(--stage-offset); }
   .isi-robek .nominal.win{ font-size: clamp(18px, 4.8vw, 22px); }
   .box:hover{ transform:none; box-shadow:none; }
 
-  .popup-card{ width:92vw; padding:28px 16px; }
-  .pop-stack{ padding:16px; }
+  /* jarak grid HP makin lega */
+  .box-container{ gap: 18px; padding:14px; }
 
-  /* GIF makin kecil & turun */
+  /* popup kecil di HP */
+  .popup-card{ width:88vw; padding:20px 14px; }
+  .pop-logo{ height:70px; }
+  .pop-title{ font-size:22px; }
+  .pop-sub{ font-size:14px; }
+
+  /* GIF makin kecil & sejajar bawah */
   #gif-left{ width:110px; bottom:4px; left:6px; }
   #gif-right-wrap img:first-child{ width:170px; }
-  #gif-right{ width:92px; bottom:14px; }
+  #gif-right{ width:92px; bottom:0; }
 }
   </style>
 </head>
@@ -316,7 +349,7 @@ function resetBoxesAll(){
 }
 
 /* =============== AUDIO SAFE =============== */
-function unlockAllSfxOnce(){ const ids=['sfxDrumBand','sfxRobek','sfxWin']; ids.forEach(id=>{ const a=byId(id); if(!a) return; a.muted=true; a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false;}).catch(()=>{a.muted=false;}); }); }
+function unlockAllSfxOnce(){ const ids=['sfxDrumBand','sfxRobek','sfxWin']; ids.forEach(id=>{ const a=byId(id); if(!a) return; a.muted=true; a.play().then(()=>{a.pause();a.currentTime=0; a.muted=false;}).catch(()=>{a.muted=false;}); }); }
 ['pointerdown','touchstart','click','keydown'].forEach(evt=>{ window.addEventListener(evt,unlockAllSfxOnce,{once:true,passive:true}); });
 function playWithRetry(el,vol=.9){ if(!el) return; el.loop=el.loop||false; el.volume=vol; el.currentTime=0; return el.play().catch(()=>{ unlockAllSfxOnce(); return el.play().catch(()=>{}); }); }
 function playLoop(id,vol=.9){ const a=byId(id); if(!a)return; a.loop=true; return playWithRetry(a,vol); }
@@ -437,7 +470,7 @@ async function pilihBox(el){
     stopLoop('sfxDrumBand', 200);
 
     byId("popupContent").innerHTML = `
-      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
+      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:90px;margin-bottom:8px;">
       <div>🎉</div>
       <strong class="win-amount">MENANG ${hadiahUtama}</strong>
       <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
