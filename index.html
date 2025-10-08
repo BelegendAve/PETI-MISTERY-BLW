@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>⚰️ PETI MISTERY</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+  <style>
+/* ================== THEME GLOBAL ================== */
+:root{
+  --stage-offset: 210px;
+  --grid-w: min(1200px, 96vw);
+  --judul-icon-size: 80px;
+  --judul-icon-gap: 20px;
+  --judul-board-h: 68px;
+}
+@media (max-width:1024px){
+  :root{ --stage-offset: 230px; --judul-icon-size: 72px; --judul-board-h: 62px; }
+}
+@media (max-width:600px){
+  :root{ --stage-offset: 260px; --judul-icon-size: 56px; --judul-board-h: 56px; }
+}
+
+html, body{
+  margin:0; padding:0; min-height:100vh; font-family:'Segoe UI',sans-serif; color:#fff; text-align:center;
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(80,0,0,.35) 0%, transparent 60%),
+    linear-gradient(180deg,#0d0d0d 0%,#000 100%);
+}
+
+/* ================== BANNER & JUDUL ================== */
+.banner-berjalan{
+  width:100%; background:#111; border-bottom:2px solid #b30000; color:#fff;
+  padding:8px 0; font-weight:700; font-size:16px; position:fixed; top:0; left:0; z-index:9999;
+}
+.fixed-judul{ position:fixed; top:82px; left:0; width:100%; background:transparent; z-index:9998; padding:10px 0 16px; }
+.fixed-judul::before{
+  content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width: var(--grid-w); height: var(--judul-board-h); border-radius:14px;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0)), linear-gradient(180deg,#1b0b0b,#0f0b0b);
+  border:1px solid #6a0000; box-shadow:0 10px 30px rgba(255,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06); opacity:.95; z-index:-1;
+}
+.fixed-judul h1{ margin:0; font-family:'Arial Black',sans-serif; font-weight:900; font-size:32px; letter-spacing:2px; color:#ffcc00; text-shadow:0 0 8px #b30000, 2px 2px 0 #000; }
+.judul-ikon{ position:relative; display:inline-block; padding:0 calc(var(--judul-icon-size) + var(--judul-icon-gap)); }
+.judul-ikon::before, .judul-ikon::after{
+  content:""; position:absolute; top:50%; transform:translateY(-50%); width:var(--judul-icon-size); height:var(--judul-icon-size);
+  background-size:contain; background-position:center; background-repeat:no-repeat; filter:drop-shadow(0 0 6px rgba(255,200,0,.5)); pointer-events:none;
+}
+.judul-ikon::before{ left:10px;  background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
+.judul-ikon::after { right:10px; background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
+
+/* ================== OFFSET KONTEN BOX ================== */
+.stage{ margin-top: var(--stage-offset); }
+
+/* ================== LOGO (FORM ONLY) ================== */
+#brand{ margin: clamp(120px, 16vh, 200px) auto 12px; width:100%; }
+#brand img{ height:100px; cursor:pointer; display:block; margin:0 auto; }
+
+/* ================== FORM ================== */
+.form-vertical{ display:flex; flex-direction:column; align-items:center; gap:14px; }
+.form-vertical input{
+  width:min(92vw,420px); height:56px; font-size:20px; padding:12px 18px; border-radius:10px; border:1px solid #333; background:#0f0f0f; color:#fff;
+}
+.form-vertical input::placeholder{ color:#aaa; }
+.form-vertical button{
+  width:min(92vw, 420px); height:60px; font-size:20px; font-weight:700; border-radius:12px; background:#c40000; border:1px solid #770000; color:#fff;
+  box-shadow:0 0 12px rgba(255,40,40,.25); cursor:pointer; transition:.2s ease;
+}
+.form-vertical button:hover{ background:#e61919; transform:scale(1.03); }
+
+/* ================== TOOLBAR ATAS GRID (BESAR) ================== */
+.box-toolbar{
+  display:flex; justify-content:center; align-items:center; flex-wrap:wrap;
+  gap: clamp(12px, 1.6vw, 22px);
+  max-width: var(--grid-w);
+  margin: 0 auto clamp(18px, 2.2vw, 28px);
+  padding: clamp(6px, 0.8vw, 10px) 0;
+  position:relative; z-index:5;
+}
+.box-toolbar button{
+  flex:0 0 auto;
+  height: clamp(60px, 7vw, 80px);   /* tinggi tombol lebih besar */
+  padding: 0 clamp(28px, 4vw, 48px); /* lebar tombol lebih besar */
+  font-size: clamp(18px, 2vw, 22px); /* ukuran teks lebih besar */
+  font-weight:800;
+  border-radius:9999px;
+  background:linear-gradient(#e51c1c,#b50000);
+  border:1px solid #6f0000; 
+  color:#fff; 
+  letter-spacing:.2px;
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  gap:10px;
+  box-shadow:0 10px 28px rgba(255,50,50,.35), inset 0 1px 0 rgba(255,255,255,.12);
+  transition:transform .15s ease, background .15s ease;
+}
+
+#popupContent,
+#popupContent * {
+  color: #111 !important;  /* warna teks jadi hitam */
+}
+
+#popupContent .amount {
+  color: #FFD700 !important; /* tetap emas untuk nilai menang */
+  text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45);
+}
+
+#popupContent b {
+  color: #000 !important;  /* teks tebal tetap hitam */
+}
+
+
+.box-toolbar button:hover{ background:linear-gradient(#ff2b2b,#cc0000); transform:translateY(-1px) scale(1.02); }
+.box-toolbar button:active{ transform:translateY(1px) scale(.99); }
+
+
+/* ================== GRID PETI ================== */
+.wrapper{ display:flex; justify-content:center; width:100%; }
+.box-container{
+  display:grid; grid-template-columns:repeat(3, 1fr);
+  gap: clamp(18px, 2.2vw, 34px);
+  padding:20px; max-width: var(--grid-w); margin: 0 auto 40px;
+}
+
+/* >>> DIBESARKAN <<< */
+.box{
+  width: clamp(200px, 28vw, 320px);
+  height: clamp(200px, 28vw, 320px);
+  background:#151515; border:2px solid #400; border-radius:16px;
+  display:flex; align-items:center; justify-content:center; transition:.25s ease;
+}
+.box:hover{ transform:scale(1.06) rotate(2deg); box-shadow:0 0 22px rgba(200,0,0,.6); border-color:#d00; }
+
+.box svg{
+  width: clamp(84px, 10vw, 128px);
+  height: clamp(120px, 14vw, 176px);
+  filter:drop-shadow(0 0 6px rgba(255,0,0,.7)); transition:.2s;
+}
+.box:hover svg{ transform:translateY(-2px) scale(1.04); }
+
+/* Efek buka / flip */
+@keyframes robekAnim{0%{transform:scale(1)}30%{transform:scale(1.2) rotate(2deg)}60%{transform:scale(1) rotate(-2deg)}100%{transform:scale(1.05)}}
+.box.terbuka{ animation:robekAnim .3s ease forwards; border:3px solid #b30000; }
+
+/* loop lama (biar kompatibel) */
+@keyframes flipLoop{0%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
+.box.flip-loop{ animation:flipLoop .15s linear 30; transform-style:preserve-3d; backface-visibility:hidden; }
+
+/* loop infinite */
+.box.flip-spin{
+  animation: flipLoop .45s linear infinite;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+@keyframes flipBox{0%,20%,40%,60%,80%,100%{transform:rotateY(0)}10%,30%,50%,70%,90%{transform:rotateY(180deg)}}
+.box.clicked{ animation:flipBox .99s ease-in-out; transform-style:preserve-3d; }
+
+/* ================== NOMINAL (BESAR) ================== */
+.isi-robek{ display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:6px; }
+.isi-robek .icon{ font-size: clamp(20px, 2vw, 32px); margin-bottom: 6px; }
+.isi-robek .nominal{
+  font-size: clamp(32px, 3vw, 44px);
+  font-weight: 800; line-height:1.2;
+}
+.isi-robek .nominal.win{
+  font-size: clamp(36px, 3.5vw, 52px);
+  color:#FFD700; font-weight:900;
+}
+
+/* BESARIN TEKS YANG DIPAKAI SEKARANG */
+#popupContent .win-amount{
+  font-size: clamp(44px, 6vw, 64px);   /* gedein di desktop, tetap rapi di HP */
+  font-weight: 900;
+  letter-spacing: .4px;
+  line-height: 1.15;
+  color:#000;                          /* biar jelas */
+  display:block;
+  margin: 6px 0 4px;
+}
+
+#popupContent .subnote{
+  font-size: clamp(20px, 3vw, 26px);   /* sedikit lebih besar dari sebelumnya */
+  font-weight: 600;
+  color:#222;
+  letter-spacing:.3px;
+  margin-top: 8px;
+}
+
+/* kalau mau angka hadiah tetap emas */
+#popupContent .win-amount b,
+#popupContent .win-amount .amount{
+  color:#FFD700;
+  text-shadow: 0 0 12px rgba(255,215,0,.75), 0 0 22px rgba(255,180,0,.45);
+}
+
+
+/* ================== POPUP (UMUM) ================== */
+.popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
+
+/* === Overlay & layering === */
+.popup{
+  position:fixed; inset:0;
+  display:none; align-items:center; justify-content:center;
+  background: rgba(0,0,0,.72);
+  backdrop-filter: blur(2px);
+  z-index: 100000; /* paling atas */
+}
+
+/* ==== BESARIN TEKS POPUP SECARA PROPORSIONAL ==== */
+#popupContent .pop-title {
+  font-size: clamp(48px, 6vw, 60px) !important;  /* sebelumnya sekitar 36–44px */
+  font-weight: 900;
+  color: #000;
+  text-shadow: 0 0 10px rgba(255,215,0,0.7),
+               0 0 20px rgba(255,180,0,0.5);
+  letter-spacing: 0.5px;
+  line-height: 1.1;
+}
+
+#popupContent .pop-title .amount {
+  color: #FFD700;
+  text-shadow: 0 0 14px rgba(255,215,0,.8),
+               0 0 26px rgba(255,180,0,.5);
+}
+
+#popupContent .pop-sub {
+  font-size: clamp(22px, 3vw, 26px) !important; /* sedikit dibesarin */
+  font-weight: 600;
+  color: #222;
+  letter-spacing: 0.4px;
+  margin-top: 10px;
+}
+
+/* === Kartu pop-up utama === */
+.popup-card{
+  position:relative;
+  width:min(96vw, 880px);
+  border-radius:28px;
+  padding: clamp(48px, 7vw, 84px) clamp(28px, 4vw, 48px);
+  background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%);
+  border:2px solid rgba(255,0,0,.28);
+  box-shadow:
+    0 0 40px rgba(255,0,0,.35),
+    0 26px 80px rgba(0,0,0,.6);
+  text-align:center;
+  transform: translateY(12px) scale(.96);
+  opacity: 0;
+  animation: popupIn .38s ease forwards;
+}
+
+/* animasi masuk */
+@keyframes popupIn{
+  to{ transform: translateY(0) scale(1); opacity:1; }
+}
+
+/* tombol close selalu di atas */
+.popup-card .close-x{ z-index:2; }
+
+/* ====== ISI TERSTRUKTUR ====== */
+#popupContent{ margin:0; }
+.pop-stack{
+  display:flex; flex-direction:column; align-items:center;
+  gap: clamp(12px, 2.2vw, 22px);
+  padding: clamp(16px, 2.4vw, 28px);
+  border:2px solid #ff2a2a;
+  border-radius:16px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+.pop-logo{
+  height: clamp(120px, 15vw, 180px);
+  display:block; margin: 0 auto 4px;
+}
+
+.pop-emoji{ font-size: clamp(28px, 4vw, 42px); }
+
+.pop-title{
+  font-size: clamp(40px, 5.6vw, 68px);
+  font-weight: 900; letter-spacing: .3px;
+  color:#111;
+  text-shadow: 0 1px 0 #fff;
+}
+.pop-title .amount{
+  color:#FFD700;
+  text-shadow: 0 0 14px rgba(255,215,0,.85), 0 0 28px rgba(255,180,0,.45);
+}
+
+.pop-sub{
+  font-size: clamp(18px, 2.6vw, 24px);
+  color:#333; font-weight:500; letter-spacing:.2px;
+}
+
+/* tombol CTA selaras */
+.popup-card .klaim-button{
+  display:flex; align-items:center; justify-content:center; gap:14px;
+  width:100%; max-width:520px;
+  margin: clamp(22px, 3.2vw, 34px) auto 0;
+  padding: clamp(22px, 3vw, 28px) clamp(24px, 3.2vw, 34px);
+  font-size: clamp(22px, 3.2vw, 32px);
+  font-weight: 900;
+  border-radius:20px;
+  background: linear-gradient(180deg,#ff3030 0%, #a80000 95%);
+  color:#fff; border:2px solid #770000;
+  box-shadow: 0 0 35px rgba(255,0,0,.4), inset 0 1px 0 rgba(255,255,255,.2);
+  transition:.22s ease;
+  animation: pulseGlow 2s infinite;
+}
+.popup-card .klaim-button:hover{
+  transform: scale(1.08);
+  background: linear-gradient(180deg,#ff4040 0%, #b50000 95%);
+  box-shadow: 0 0 50px rgba(255,0,0,.7);
+}
+.popup-card .klaim-button img{ height: clamp(30px, 4.2vw, 46px) !important; }
+
+/* glow berdenyut halus */
+@keyframes pulseGlow{
+  0%,100%{ box-shadow:0 0 30px rgba(255,0,0,.4), 0 0 60px rgba(255,0,0,.2); }
+  50%    { box-shadow:0 0 55px rgba(255,0,0,.7), 0 0 85px rgba(255,0,0,.3); }
+}
+
+/* mobile fine-tune */
+@media (max-width:600px){
+  .popup-card{ width:92vw; padding:36px 18px; }
+  .pop-stack{ padding:16px; }
+}
+
+.popup-card .klaim-button:hover{ background:#e61919; }
+
+/* ======= Popup History ======= */
+#historyContent{
+  text-align:left;
+  max-height:60vh; overflow:auto;
+  font-size:16px;
+}
+.close-x{
+  position:absolute; top:10px; right:12px;
+  width:36px; height:36px; border-radius:50%;
+  background:#111; color:#fff; border:1px solid #333;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:900; cursor:pointer;
+}
+.close-x:hover{ filter:brightness(1.2); }
+
+/* ================== RESPONSIVE EXTRA ================== */
+@media (max-width:600px){
+  .fixed-judul{ top:74px; }
+  .box-toolbar{ gap:12px; }
+  .box-toolbar button{
+    height: clamp(46px, 12vw, 58px);
+    padding: 0 clamp(14px, 4.4vw, 26px);
+    font-size: clamp(14.5px, 3.6vw, 17px);
+  }
+  .box-container{ max-width:94vw; }
+  .box{ width: clamp(140px, 28vw, 180px); height: clamp(140px, 28vw, 180px); }
+  .box svg{ width: clamp(64px, 9vw, 96px); height: clamp(90px, 12vw, 128px); }
+}
+
+/* ==== Paksa warna teks di popup HISTORY jadi hitam ==== */
+#popupHistory .popup-card { color:#111; }
+
+#historyContent,
+#historyContent * {
+  color:#111 !important;   /* override semua turunan jadi hitam */
+}
+
+/* (opsional) kalau ada text “gold” ingin tetap beda */
+#historyContent [style*="color:gold"] { color:#b8860b !important; }
+
+/* (opsional) warna link */
+#historyContent a { color:#111 !important; text-decoration: underline; }
+
+
+  </style>
+</head>
+
+<body>
+  <div class="banner-berjalan">
+    <marquee>SELAMAT DATANG DI PETI MISTERY ⚰️ – DI BALIK PETI GELAP PENUH MISTERI INI, TERSEMBUNYI BONUS JUTAAN RUPIAH 💰 – HANYA YANG BERANI MEMBUKA AKAN MENDAPATKAN REZEKI BESAR!</marquee>
+  </div>
+
+  <div class="fixed-judul">
+    <h1 class="judul-ikon"><span>PETI MISTERY</span></h1>
+  </div>
+
+  <div id="formPage" class="form-vertical">
+    <div id="brand">
+      <a href="https://belegendwin1.com" target="_blank">
+        <img src="https://i.ibb.co/j9DVyNpq/image-2.png" alt="BELEGENDWIN" />
+      </a>
+    </div>
+
+    <input type="text" id="nama" placeholder="USERNAME"/>
+    <input type="text" id="kode" placeholder="KODE TOKEN"/>
+    <button id="btnVerifikasi" type="button">🔒 <span id="btnText">MULAI VERIFIKASI</span></button>
+  </div>
+
+  <div id="boxPage" style="display:none;">
+    <div class="stage">
+<div class="box-toolbar">
+  <button onclick="tampilkanHistoryGabungan()">📜 <span id="textHistori"> CEK HISTORY </span></button>
+  <button onclick="cekPopup()">🔎 CEK POPUP</button>
+</div>
+
+
+      <!-- historyBox dihapus: sekarang pakai popup -->
+      <div class="wrapper">
+        <div class="box-container" id="boxArea">
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+          <div class="box" onclick="pilihBox(this)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hasil"></div>
+
+  <!-- POPUP HADIAH -->
+  <div id="popupHadiah" class="popup">
+    <div class="popup-card">
+      <button class="close-x" onclick="byId('popupHadiah').style.display='none'">×</button>
+      <div id="popupContent" style="margin-bottom:15px;"></div>
+      <a href="https://t.me/+MYu2cG2rBPwzNGQ9" target="_blank" class="klaim-button">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="height:20px;vertical-align:middle;margin-right:8px;">
+        KLAIM BONUS DISINI
+      </a>
+    </div>
+  </div>
+
+  <!-- POPUP HISTORY (BARU) -->
+  <div id="popupHistory" class="popup">
+    <div class="popup-card">
+      <button class="close-x" onclick="byId('popupHistory').style.display='none'">×</button>
+      <h3 style="margin:0 0 10px 0;">📜 Riwayat & Pemenang</h3>
+      <div id="historyContent"></div>
+    </div>
+  </div>
+
+  <!-- GIF POJOK -->
+  <img src="https://media.tenor.com/s-6xMGhtfssAAAAi/c%C6%B0%E1%BB%9Di-kh%C3%B4ng-c%C3%B3g%C3%AC.gif"
+       style="position:fixed;bottom:20px;left:20px;width:220px;z-index:999;pointer-events:none;opacity:.9;">
+
+  <div style="position:fixed;bottom:10px;right:10px;z-index:9;">
+    <div style="position:relative;display:inline-block;">
+      <img src="https://media.tenor.com/Bvj4YBWQ6MIAAAAi/sluggish-slayer.gif" style="width:300px;">
+      <img src="https://media.tenor.com/RIoZ0K_k_9kAAAAi/evil-nun-keplerian.gif"
+           style="position:absolute;bottom:35px;left:50%;transform:translateX(-50%);width:150px;">
+    </div>
+  </div>
+
+  <script>
+/* SVG & util */
+const COFFIN_SVG = `
+<svg viewBox="0 0 256 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+  <path d="M128 8 40 64 24 152l64 192h80l64-192-16-88z" fill="#0B0B0B"/>
+  <path d="M128 24 56 72 42 152l58 168h56l58-168-14-80z" fill="#8E0008"/>
+  <rect x="118" y="90" width="20" height="124" fill="#2A0A0A"/>
+  <rect x="90" y="128" width="76" height="20" fill="#2A0A0A"/>
+</svg>`;
+const byId = id => document.getElementById(id);
+const setAllCoffins = () => document.querySelectorAll('.box').forEach(el => el.innerHTML = COFFIN_SVG);
+
+/* Reset */
+function resetBoxesAll(){
+  document.querySelectorAll('.box').forEach(b=>{
+    b.className='box'; b.removeAttribute('style'); b.innerHTML=COFFIN_SVG;
+  });
+  sudahSpin=false; indexDipilih=-1; hadiahLain=[]; hadiahUtama='';
+}
+
+/* Audio safe */
+function unlockAllSfxOnce(){ const ids=['sfxDrumBand','sfxRobek','sfxWin']; ids.forEach(id=>{ const a=byId(id); if(!a) return; a.muted=true; a.play().then(()=>{a.pause();a.currentTime=0;a.muted=false;}).catch(()=>{a.muted=false;}); }); }
+['pointerdown','touchstart','click','keydown'].forEach(evt=>{ window.addEventListener(evt,unlockAllSfxOnce,{once:true,passive:true}); });
+function playWithRetry(el,vol=.9){ if(!el) return; el.loop=el.loop||false; el.volume=vol; el.currentTime=0; return el.play().catch(()=>{ unlockAllSfxOnce(); return el.play().catch(()=>{}); }); }
+function playLoop(id,vol=.9){ const a=byId(id); if(!a)return; a.loop=true; return playWithRetry(a,vol); }
+function stopLoop(id,ms=250){ const a=byId(id); if(!a)return; a.loop=false; const start=a.volume||.9; const step=start/Math.max(1,Math.round(ms/50)); const iv=setInterval(()=>{ a.volume=Math.max(0,a.volume-step); if(a.volume<=.01){ clearInterval(iv); a.pause(); a.currentTime=0; a.volume=start; }},50); }
+
+/* Popup close (klik di luar kartu) */
+byId("popupHadiah").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHadiah").style.display="none"; });
+byId("popupHistory").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHistory").style.display="none"; });
+
+let namaUser="", kodeToken="", hadiahUtama="", indexDipilih=-1, hadiahLain=[], sudahSpin=false;
+
+/* Start / Verif */
+function spinStart(){
+  resetBoxesAll();
+  namaUser=byId("nama").value.trim();
+  kodeToken=byId("kode").value.trim();
+  const btnText=byId("btnText");
+  btnText.innerText="MEMPROSES"; btnText.classList.add("loading-dots");
+  byId("hasil").innerHTML="";
+  if(!namaUser||!kodeToken){
+    alert("Isi nama dan kode token dulu!");
+    btnText.innerText="MULAI VERIFIKASI"; btnText.classList.remove("loading-dots"); return;
+  }
+  google.script.run.withSuccessHandler(function(res){
+    btnText.innerText="MULAI VERIFIKASI"; btnText.classList.remove("loading-dots");
+    if(res==="OK"){
+      byId("formPage").style.display="none";
+      byId("boxPage").style.display="block";
+      byId("boxArea").style.display="grid";
+      resetBoxesAll();
+    }else{
+      byId("hasil").innerHTML=`<span style="font-weight:800;">${res}</span>`;
+    }
+  }).cekDanPakaiToken(namaUser,kodeToken);
+}
+
+/* Buka semua box */
+function bukaSemuaBox(){
+  const boxes=document.querySelectorAll(".box");
+  boxes.forEach(box=>{ box.innerHTML=''; box.classList.remove("terbuka"); box.style=''; });
+
+  boxes.forEach((box,i)=>{
+    setTimeout(()=>{
+      box.classList.add("terbuka");
+      box.style.pointerEvents="none";
+
+      const isi=document.createElement("div");
+      isi.classList.add("isi-robek");
+      isi.style.transition="opacity .8s ease"; 
+      isi.style.opacity="0";
+
+      if(i===indexDipilih){
+        box.style.background="#3a0000"; box.style.color="#ffd700";
+        isi.innerHTML = `
+          <div class="icon">🎯</div>
+          <div class="nominal win">${hadiahUtama}</div>`;
+      }else{
+        const angka=parseInt(hadiahLain[i])||0;
+        box.style.background="#0e0e0e"; box.style.color="#fff";
+        isi.innerHTML = `<div class="nominal">Rp${angka.toLocaleString("id-ID")}</div>`;
+      }
+
+      box.appendChild(isi);
+      const robek=byId('sfxRobek'); if(robek) playWithRetry(robek,.9);
+      setTimeout(()=>{ isi.style.opacity="1"; },600);
+    }, i*200);
+  });
+}
+
+function cekPopup(){
+  const hadiah = byId('popupHadiah');
+  const history = byId('popupHistory');
+  const hadiahContent = byId('popupContent');
+
+  // Kalau popup hadiah sudah punya isi, tampilkan itu dulu
+  const hasHadiah = hadiahContent && hadiahContent.textContent.trim().length > 0;
+
+  if (hasHadiah) {
+    hadiah.style.display = 'flex';
+    return;
+  }
+
+  // Kalau belum ada konten hadiah, coba tampilkan History.
+  const user = (byId('nama')?.value || '').trim();
+  if (user) {
+    // Panggil fungsi yang sudah ada untuk tarik data history dan munculkan popup-nya
+    tampilkanHistoryGabungan();
+  } else {
+    // Fallback: kasih info dulu di popup history
+    byId('historyContent').innerHTML =
+      "<p style='color:#c00;font-weight:700;margin:0'>Belum ada popup hadiah untuk ditampilkan.<br>Masukkan nama, lalu cek histori.</p>";
+    history.style.display = 'flex';
+  }
+}
+
+
+/* Pilih satu box — flip infinite sampai data siap */
+function pilihBox(el){
+  if(sudahSpin) return; sudahSpin=true;
+
+  const boxes=document.querySelectorAll(".box");
+  indexDipilih=[...boxes].indexOf(el);
+  boxes.forEach(b=>b.classList.remove("clicked","flip-loop","flip-spin"));
+
+  el.classList.add("flip-spin");
+  el.style.pointerEvents="none";
+  playLoop('sfxDrumBand',.8);
+
+  let watchdog=setTimeout(()=>{
+    el.classList.remove("flip-spin");
+    el.classList.add("clicked");
+    stopLoop('sfxDrumBand',400);
+  },8000);
+
+  google.script.run.withSuccessHandler(function(data){
+    hadiahLain=data;
+    google.script.run.withSuccessHandler(function(tipe){
+      let hadiah=10;
+      if(tipe==="kuponA") hadiah=[2500,3000,3500][Math.floor(Math.random()*3)];
+      else if(tipe==="kuponB") hadiah=[4000,4500,5000,5500][Math.floor(Math.random()*4)];
+      hadiahUtama=`Rp${hadiah.toLocaleString()}`;
+
+      clearTimeout(watchdog);
+      el.classList.remove("flip-spin");
+      el.classList.add("clicked");
+
+      setTimeout(()=>{
+        bukaSemuaBox();
+        stopLoop('sfxDrumBand',400);
+        google.script.run.simpanHasil({nama:namaUser,kode:kodeToken,status:hadiahUtama});
+
+byId("popupContent").innerHTML = `
+  <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
+  <div>🎉</div>
+  <strong class="win-amount">MENANG ${hadiahUtama}</strong>
+  <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
+`;
+
+        setTimeout(()=>{
+          byId("popupHadiah").style.display="flex";
+          const w=byId('sfxWin'); if(w) playWithRetry(w,1);
+        },300);
+      },350);
+
+    }).getTipeKupon(namaUser);
+  }).getSisaHadiah();
+}
+
+/* HISTORY → tampil sebagai POPUP */
+function tampilkanHistoryGabungan(){
+  const user = byId("nama").value.trim();
+  const userLC = user.toLowerCase();
+  const btnLbl = byId("textHistori");
+  let dot = 0;
+  const iv = setInterval(()=>{ dot=(dot+1)%4; btnLbl.innerText = "LOADING" + ".".repeat(dot); }, 500);
+
+  if (!user) {
+    clearInterval(iv); btnLbl.innerText = "CEK HISTORI";
+    byId("historyContent").innerHTML = "<p style='color:#c00;font-weight:700'>❌ Masukkan nama dulu sebelum cek histori!</p>";
+    byId("popupHistory").style.display = "flex";
+    return;
+  }
+
+  google.script.run.withSuccessHandler(function (data) {
+    clearInterval(iv); btnLbl.innerText = "CEK HISTORI";
+
+    let myRows = (data.member || []).filter(r => (r.nama || '').toLowerCase() === userLC);
+    let myLatest = myRows.length ? myRows[myRows.length - 1] : null;
+
+    let html = `
+      <div style="margin-bottom:10px;padding:8px;background:linear-gradient(to right,#ffcc00,#ff9900);color:#000;font-weight:bold;border-radius:6px;">
+        🥇 Kemenangan mulai dari Rp3.000 – Rp1.000.000 💰
+      </div>
+    `;
+    if (myLatest) {
+      html += `
+        <div style="margin:6px 0 14px 0; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg,#2a2210,#3b2b00); border:1px solid #FFC107; box-shadow:0 0 12px rgba(255,193,7,.35);">
+          🔥 Terbaru untuk kamu:<br>
+          <span style="color:#FFD54F">@${myLatest.nama}</span>
+          <span style="opacity:.7"> memenangkan </span>
+          <span style="color:#FFC107">${formatRupiah(myLatest.status)}</span>
+        </div>
+      `;
+    }
+    html += `<h4 style="margin:8px 0 6px 0;">🧾 Riwayat Anda</h4>`;
+    if (data.member && data.member.length) {
+      html += `<ul style="padding-left:18px;line-height:1.6;">`;
+      data.member.forEach(row => {
+        const isMe = (row.nama || '').toLowerCase() === userLC;
+        html += `<li${isMe ? ' style="background:rgba(255,193,7,.12);border-left:3px solid #FFC107;padding:2px 6px;border-radius:6px;"':''}>✅ <strong>${row.nama}</strong> menang <span style="color:gold;">${formatRupiah(row.status)}</span></li>`;
+      });
+      html += `</ul>`;
+    } else {
+      html += `<div style="opacity:.8;margin-bottom:8px;">Belum ada riwayat atas nama <b>${user}</b>.</div>`;
+    }
+    html += `<h4 style="margin:10px 0 6px 0;">🏆 Pemenang Hari Ini</h4>`;
+    if (data.fake && data.fake.length) {
+      html += `<ul style="padding-left:18px;line-height:1.6;">`;
+      data.fake.forEach(txt => { html += `<li>🏆 ${txt}</li>`; });
+      html += `</ul>`;
+    } else { html += `<div style="opacity:.8">Belum ada data pemenang.</div>`; }
+
+    byId("historyContent").innerHTML = html;
+    byId("popupHistory").style.display = "flex";
+  }).ambilHistoriGabungan(user);
+}
+
+function formatRupiah(val){
+  if (typeof val === 'number') return 'Rp ' + val.toLocaleString('id-ID');
+  if (/rp/i.test(String(val))) return val;
+  const n = parseInt(String(val).replace(/[^\d]/g,''))||0;
+  return 'Rp ' + n.toLocaleString('id-ID');
+}
+
+
+document.addEventListener('DOMContentLoaded',function(){
+  const btn=byId('btnVerifikasi');
+  setAllCoffins();
+  document.querySelectorAll('input,textarea,select').forEach(el=>{
+    el.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); blurThenReset(); }});
+    el.addEventListener('blur',()=>blurThenReset());
+  });
+  if(btn) btn.addEventListener('click',()=>blurThenReset(()=>spinStart()));
+  document.addEventListener('touchend',e=>{ if(!e.target.closest('input,textarea,select,button')) blurThenReset(); },{passive:true});
+  function blurThenReset(next){
+    const a=document.activeElement; if(a && /INPUT|TEXTAREA|SELECT/.test(a.tagName)) a.blur();
+    setTimeout(()=>{ window.scrollTo(0,0); if(typeof next==='function') next(); },300);
+  }
+  if(btn) btn.addEventListener('click',unlockAllSfxOnce,{once:true});
+});
+  </script>
+
+  <!-- audio -->
+  <audio id="sfxRobek" src="https://files.catbox.moe/m83w1f.mp3" preload="auto" playsinline crossorigin="anonymous"></audio>
+  <audio id="sfxWin"   src="https://files.catbox.moe/h7gic8.mp3" preload="auto" playsinline crossorigin="anonymous"></audio>
+  <!-- <audio id="sfxDrumBand" src="YOUR-DRUM-LOOP.mp3" preload="auto" playsinline crossorigin="anonymous"></audio> -->
+</body>
+</html>
