@@ -4,10 +4,9 @@
   <meta charset="UTF-8" />
   <title>⚰️ PETI MISTERY</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-
   <style>
-/* ================== NO SCROLL GLOBAL ================== */
-html, body{
+/* ================= NO SCROLL ================= */
+html, body {
   margin:0; padding:0;
   height:100dvh;
   overflow:hidden !important;
@@ -19,62 +18,66 @@ html, body{
     linear-gradient(180deg,#0d0d0d 0%,#000 100%);
 }
 
-/* ================== VAR ================== */
+/* ================= VARIABEL ================= */
 :root{
   --grid-w: min(1200px, 96vw);
-  --judul-icon-size: 58px;
-  --judul-icon-gap: 16px;
   --judul-board-h: 58px;
-  --stage-offset: 90px;              /* naikin grid biar gak nabrak GIF bawah */
+  --stage-offset: 86px;
   --box-size: clamp(116px, 27vw, 160px);
 }
 @media (max-width:600px){
   :root{
-    --judul-icon-size: 46px;
     --judul-board-h: 52px;
-    --stage-offset: 80px;
+    --stage-offset: 76px;
     --box-size: clamp(104px, 29vw, 140px);
   }
 }
 
-/* ================== BANNER & JUDUL (fixed) ================== */
+/* ================= BANNER & JUDUL ================= */
 .banner-berjalan{
   position:fixed; top:0; left:0; z-index:9999;
   width:100%; padding:6px 0; font-size:13px; font-weight:700;
   background:#111; border-bottom:2px solid #b30000;
 }
-
-.fixed-judul{ position:fixed; top:58px; left:0; width:100%; z-index:9998; padding:8px 0 12px; }
+.fixed-judul{
+  position:fixed; top:58px; left:0; width:100%; z-index:9998;
+  padding:8px 0 12px;
+}
 .fixed-judul::before{
   content:""; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  width: var(--grid-w); height: var(--judul-board-h); border-radius:14px;
-  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0)), linear-gradient(180deg,#1b0b0b,#0f0b0b);
-  border:1px solid #6a0000; box-shadow:0 10px 30px rgba(255,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06); opacity:.95; z-index:-1;
+  width: var(--grid-w); height: var(--judul-board-h);
+  border-radius:14px;
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,.06), rgba(255,255,255,0)),
+              linear-gradient(180deg,#1b0b0b,#0f0b0b);
+  border:1px solid #6a0000;
+  box-shadow:0 10px 30px rgba(255,0,0,.18), inset 0 1px 0 rgba(255,255,255,.06);
+  opacity:.95; z-index:-1;
 }
 
-/* judul + GIF malaikat maut kiri/kanan (BALIK LAGI) */
+/* Malaikat maut kiri kanan */
 .judul-ikon{
   position:relative; display:inline-block;
-  padding:0 calc(var(--judul-icon-size) + var(--judul-icon-gap));
+  padding:0 70px;
 }
 .judul-ikon::before, .judul-ikon::after{
   content:""; position:absolute; top:50%; transform:translateY(-50%);
-  width:var(--judul-icon-size); height:var(--judul-icon-size);
-  background-size:contain; background-position:center; background-repeat:no-repeat;
-  filter:drop-shadow(0 0 6px rgba(255,200,0,.5)); pointer-events:none;
+  width:58px; height:58px;
+  background:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif") center/contain no-repeat;
+  filter:drop-shadow(0 0 8px rgba(255,200,0,.5)); pointer-events:none;
 }
-.judul-ikon::before{ left:8px;  background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
-.judul-ikon::after { right:8px; background-image:url("https://media.tenor.com/2blJa8hF-uEAAAAj/death-death-note.gif"); }
+.judul-ikon::before{ left:0; }
+.judul-ikon::after{ right:0; }
 .fixed-judul h1{
   margin:0; font-family:'Arial Black',sans-serif; font-weight:900;
-  font-size:28px; letter-spacing:2px; color:#ffcc00; text-shadow:0 0 8px #b30000, 2px 2px 0 #000;
+  font-size:28px; letter-spacing:2px; color:#ffcc00;
+  text-shadow:0 0 8px #b30000, 2px 2px 0 #000;
 }
 @media (max-width:600px){ .fixed-judul h1{ font-size:24px; } }
 
-/* ================== APP WRAPPER ================== */
+/* ================= APP WRAPPER ================= */
 .app{ height:100dvh; display:flex; flex-direction:column; overflow:hidden; }
 
-/* ================== FORM ================== */
+/* ================= FORM ================= */
 #formPage{ margin-top: var(--stage-offset); flex:1 0 auto; display:flex; flex-direction:column; align-items:center; gap:10px; }
 #brand img{ height:64px; cursor:pointer; display:block; margin:0 auto 8px; }
 .form-vertical{ display:flex; flex-direction:column; align-items:center; gap:10px; transform:translateZ(0); }
@@ -85,12 +88,13 @@ html, body{
 .form-vertical input::placeholder{ color:#aaa; }
 .form-vertical button{
   width:min(90vw, 320px); height:48px; font-size:16px; font-weight:800; border-radius:10px;
-  background:#c40000; border:1px solid #770000; color:#fff; box-shadow:0 0 12px rgba(255,40,40,.25);
+  background:#c40000; border:1px solid #770000; color:#fff;
+  box-shadow:0 0 12px rgba(255,40,40,.25);
   cursor:pointer; transition:.2s ease;
 }
 .form-vertical button:hover{ background:#e61919; transform:scale(1.03); }
 
-/* ================== TOOLBAR ================== */
+/* ================= TOOLBAR ================= */
 .box-toolbar{
   display:flex; justify-content:center; align-items:center; gap:12px; flex-wrap:wrap;
   max-width: var(--grid-w); margin:0 auto 10px; padding:6px 0;
@@ -98,11 +102,10 @@ html, body{
 .box-toolbar button{
   height:44px; padding:0 18px; font-size:14px; font-weight:800; border-radius:9999px;
   background:linear-gradient(#e51c1c,#b50000); border:1px solid #6f0000; color:#fff;
-  display:flex; align-items:center; justify-content:center; gap:10px;
   box-shadow:0 10px 28px rgba(255,50,50,.35), inset 0 1px 0 rgba(255,255,255,.12);
 }
 
-/* ================== GRID PETI ================== */
+/* ================= GRID PETI ================= */
 #boxPage{ display:none; flex:1 1 auto; overflow:hidden; }
 .stage{
   margin-top: var(--stage-offset);
@@ -115,67 +118,54 @@ html, body{
   justify-content:center;
   align-items:center;
   overflow:hidden;
-  padding-bottom: 110px;  /* lebih tinggi biar aman dari GIF bawah */
+  padding-bottom: 120px;
 }
 @media (max-width:600px){
-  .wrapper{ padding-bottom: 130px; }  /* tambahin ruang ekstra untuk HP */
+  .wrapper{ padding-bottom: 140px; }
 }
-
-/* kalau layar pendek, kecilin dikit supaya tetap muat tanpa scroll */
+.box-container{
+  display:grid;
+  grid-template-columns: repeat(3, var(--box-size));
+  gap:18px;
+  justify-content:center;
+  align-content:center;
+}
 @media (max-height:620px){ .box-container{ transform: scale(.92); } }
 @media (max-height:560px){ .box-container{ transform: scale(.86); } }
 
 .box{
   width:var(--box-size); height:var(--box-size);
   background:#151515; border:2px solid #400; border-radius:16px;
-  display:flex; align-items:center; justify-content:center; transition:.25s ease;
-  backface-visibility:hidden; transform-style:preserve-3d;
+  display:flex; align-items:center; justify-content:center;
+  transition:.25s ease; backface-visibility:hidden;
 }
 .box:hover{ transform:scale(1.04); box-shadow:0 0 18px rgba(200,0,0,.6); border-color:#d00; }
 .box svg{ width: clamp(64px, 9vw, 110px); height: clamp(90px, 12vw, 150px); filter:drop-shadow(0 0 6px rgba(255,0,0,.7)); }
 
-/* ====== ANIMASI BOX (BALIK LAGI) ====== */
-@keyframes robekAnim{0%{transform:scale(1)}30%{transform:scale(1.06) rotate(1deg)}60%{transform:scale(1) rotate(-1deg)}100%{transform:scale(1.02)}}
-.box.terbuka{ animation:robekAnim .25s ease forwards; border:3px solid #b30000; }
-
+/* Animasi */
 @keyframes flipLoop{0%{transform:rotateY(0)}100%{transform:rotateY(180deg)}}
 .box.flip-spin{ animation: flipLoop .5s linear infinite; }
 
-@keyframes flipBox{
-  0%,20%,40%,60%,80%,100%{transform:rotateY(0)}
-  10%,30%,50%,70%,90%{transform:rotateY(180deg)}
-}
-.box.clicked{ animation:flipBox .9s ease-in-out; }
+/* ================= NOMINAL ================= */
+.isi-robek{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+.isi-robek .nominal.win{ color:#FFD700; font-weight:900; font-size:20px; }
 
-/* ================== NOMINAL ================== */
-.isi-robek{ display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:6px; width:100%; }
-.isi-robek .icon{ font-size:20px; margin-bottom:6px; }
-.isi-robek .nominal{ font-size:18px; font-weight:800; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.isi-robek .nominal.win{ font-size:20px; color:#FFD700; }
-
-/* ================== POPUP (kecil) ================== */
+/* ================= POPUP ================= */
 .popup{ position:fixed; inset:0; background:rgba(0,0,0,.72); display:none; justify-content:center; align-items:center; z-index:9999; }
 .popup-card{
   position:relative; width:min(88vw, 360px); border-radius:18px; padding:20px 16px;
   background: radial-gradient(circle at top center,#fff 0%,#f8f8f8 58%,#eee 100%);
-  border:2px solid rgba(255,0,0,.28); box-shadow: 0 0 25px rgba(255,0,0,.35), 0 16px 60px rgba(0,0,0,.6);
-  text-align:center; transform: translateY(8px) scale(.96); opacity:0; animation: popupIn .35s ease forwards;
+  border:2px solid rgba(255,0,0,.28); box-shadow: 0 0 25px rgba(255,0,0,.35);
+  text-align:center; animation: popupIn .35s ease forwards;
 }
-@keyframes popupIn{ to{ transform: translateY(0) scale(1); opacity:1; } }
-.close-x{
-  position:absolute; top:6px; right:6px; width:28px; height:28px; border-radius:50%;
-  background:#111; color:#fff; border:1px solid #333; display:flex; align-items:center; justify-content:center; font-weight:900; cursor:pointer;
-}
+@keyframes popupIn{ from{opacity:0; transform:scale(.95);} to{opacity:1; transform:scale(1);} }
+.close-x{ position:absolute; top:6px; right:6px; width:28px; height:28px; border-radius:50%; background:#111; color:#fff; border:1px solid #333; display:flex; align-items:center; justify-content:center; font-weight:900; cursor:pointer; }
 
-/* paksa teks popup gelap */
-#popupContent, #popupContent * { color:#111 !important; }
-#popupContent b { color:#000 !important; }
-
-/* ================== GIF SEJAJAR BAWAH ================== */
+/* ================= GIF POJOK ================= */
 #gif-left{ position:fixed; left:8px; bottom:6px; width:110px; opacity:.95; pointer-events:none; z-index:8; }
-#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:8; }
+#gif-right-wrap{ position:fixed; right:8px; bottom:6px; z-index:8; pointer-events:none; }
 #gif-right-wrap img:first-child{ width:160px; display:block; }
-#gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; }
+#gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; pointer-events:none; }
   </style>
 </head>
 
@@ -192,7 +182,7 @@ html, body{
     <!-- FORM -->
     <div id="formPage" class="form-vertical">
       <div id="brand">
-        <a href="https://belegendwin1.com" target="_blank" rel="nofollow noopener">
+        <a href="https://belegendwin1.com" target="_blank">
           <img src="https://i.ibb.co/j9DVyNpq/image-2.png" alt="BELEGENDWIN" />
         </a>
       </div>
@@ -226,27 +216,6 @@ html, body{
     </div>
   </div>
 
-  <!-- POPUP HADIAH -->
-  <div id="popupHadiah" class="popup">
-    <div class="popup-card">
-      <button class="close-x" onclick="byId('popupHadiah').style.display='none'">×</button>
-      <div id="popupContent" style="margin-bottom:12px;"></div>
-      <a href="https://t.me/+2xAFSwHrMB0wZDll" target="_blank" class="klaim-button" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:300px;margin:12px auto 0;padding:12px 16px;font-size:16px;font-weight:900;border-radius:14px;background:linear-gradient(180deg,#ff3030 0%, #a80000 95%);color:#fff;border:2px solid #770000;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="height:22px">
-        KLAIM BONUS DISINI
-      </a>
-    </div>
-  </div>
-
-  <!-- POPUP HISTORY -->
-  <div id="popupHistory" class="popup">
-    <div class="popup-card">
-      <button class="close-x" onclick="byId('popupHistory').style.display='none'">×</button>
-      <h3 style="margin:0 0 8px 0;color:#111">📜 Riwayat & Pemenang</h3>
-      <div id="historyContent" style="max-height:60vh;overflow:auto;text-align:left;"></div>
-    </div>
-  </div>
-
   <!-- GIF POJOK -->
   <img id="gif-left" src="https://media.tenor.com/s-6xMGhtfssAAAAi/c%C6%B0%E1%BB%9Di-kh%C3%B4ng-c%C3%B3g%C3%AC.gif" alt="">
   <div id="gif-right-wrap">
@@ -254,213 +223,11 @@ html, body{
     <img id="gif-right" src="https://media.tenor.com/RIoZ0K_k_9kAAAAi/evil-nun-keplerian.gif" alt="">
   </div>
 
-  <script>
-/* =============== SVG & UTIL =============== */
-const COFFIN_SVG = `
-<svg viewBox="0 0 256 360" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-  <path d="M128 8 40 64 24 152l64 192h80l64-192-16-88z" fill="#0B0B0B"/>
-  <path d="M128 24 56 72 42 152l58 168h56l58-168-14-80z" fill="#8E0008"/>
-  <rect x="118" y="90" width="20" height="124" fill="#2A0A0A"/>
-  <rect x="90" y="128" width="76" height="20" fill="#2A0A0A"/>
-</svg>`;
-const byId = (id) => document.getElementById(id);
-const setAllCoffins = () => document.querySelectorAll('.box').forEach(el => el.innerHTML = COFFIN_SVG);
-
-/* =============== API =============== */
-const API = "https://script.google.com/macros/s/AKfycbzYzGwZ5tuLljWNGeKl5M65t_Hi6mpUNppE-BXxzf7oil2ShWdxgJdRB9C2ln0KdA9O/exec";
-async function gasGet(qs){ const res = await fetch(`${API}?${qs}`, { method: 'GET' }); return res.json(); }
-async function gasPost(action, payload){ const res = await fetch(`${API}?action=${encodeURIComponent(action)}`, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ action, ...payload }) }); return res.json(); }
-const GAS = {
-  async cekDanPakaiToken(nama, kode){ const r = await gasGet(`action=cekDanPakaiToken&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`).catch(()=>({ ok:false, error:{message:'ERR'} })); if (r && r.ok && r.data==='OK') return 'OK'; return (r && (r.data || r.error?.message)) || 'Kode tidak valid'; },
-  async getSisaHadiah(){ const r = await gasGet('action=getSisaHadiah').catch(()=>({ok:false})); return (r && r.ok && Array.isArray(r.data)) ? r.data : []; },
-  async getTipeKupon(nama){ const r = await gasGet(`action=getTipeKupon&nama=${encodeURIComponent(nama)}`).catch(()=>({ok:false})); return (r && r.ok && r.data) ? r.data : 'kuponA'; },
-  async simpanHasil(payload){ try { await gasPost('simpanHasil', payload); } catch(e) {} },
-  async ambilHistoriGabungan(nama){ const r = await gasGet(`action=ambilHistoriGabungan&nama=${encodeURIComponent(nama)}`).catch(()=>({ok:false})); return (r && r.ok && r.data) ? r.data : { member:[], fake:[] }; }
-};
-
-/* =============== STATE & RESET =============== */
-let namaUser="", kodeToken="", hadiahUtama="", indexDipilih=-1, hadiahLain=[], sudahSpin=false;
-function resetBoxesAll(){
-  document.querySelectorAll('.box').forEach(b=>{ b.className='box'; b.removeAttribute('style'); b.innerHTML=COFFIN_SVG; });
-  sudahSpin=false; indexDipilih=-1; hadiahLain=[]; hadiahUtama='';
-}
-
-/* =============== POPUP CLOSE BG =============== */
-byId("popupHadiah").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHadiah").style.display="none"; });
-byId("popupHistory").addEventListener("click",e=>{ if(!e.target.closest(".popup-card")) byId("popupHistory").style.display="none"; });
-
-/* =============== START / VERIF =============== */
-async function spinStart(){
-  resetBoxesAll();
-  namaUser=byId("nama").value.trim();
-  kodeToken=byId("kode").value.trim();
-  const btnText=byId("btnText"); const hasil=byId('hasil');
-  btnText.innerText="MEMPROSES"; hasil.innerHTML="";
-  if(!namaUser||!kodeToken){ alert("Isi nama dan kode token dulu!"); btnText.innerText="MULAI VERIFIKASI"; return; }
-  const res = await GAS.cekDanPakaiToken(namaUser,kodeToken).catch(()=>"Error koneksi");
-  btnText.innerText="MULAI VERIFIKASI";
-  if(res==='OK'){
-    byId("formPage").style.display="none";
-    byId("boxPage").style.display="block";
-    byId("boxArea").style.display="grid";
-    resetBoxesAll();
-  }else{
-    hasil.innerHTML = `<span style="color:#ffd54f;">❌ ${res}</span>`;
-  }
-}
-
-/* =============== ANIMASI BUKA SEMUA BOX =============== */
-function bukaSemuaBox(){
-  const boxes=document.querySelectorAll(".box");
-  boxes.forEach(box=>{ box.innerHTML=''; box.classList.remove("terbuka"); box.style=''; });
-  boxes.forEach((box,i)=>{
-    setTimeout(()=>{
-      box.classList.add("terbuka");
-      box.style.pointerEvents="none";
-      const isi=document.createElement("div");
-      isi.classList.add("isi-robek");
-      isi.style.transition="opacity .6s ease"; 
-      isi.style.opacity="0";
-      if(i===indexDipilih){
-        box.style.background="#3a0000"; box.style.color="#ffd700";
-        isi.innerHTML = `<div class="icon">🎯</div><div class="nominal win">${hadiahUtama}</div>`;
-      }else{
-        const angka=parseInt(hadiahLain[i])||0;
-        box.style.background="#0e0e0e"; box.style.color="#fff";
-        isi.innerHTML = `<div class="nominal">Rp${angka.toLocaleString("id-ID")}</div>`;
-      }
-      box.appendChild(isi);
-      setTimeout(()=>{ isi.style.opacity="1"; },300);
-    }, i*160);
-  });
-}
-
-/* =============== CEK POPUP QUICK =============== */
-function cekPopup(){
-  const hadiah = byId('popupHadiah');
-  const history = byId('popupHistory');
-  const hadiahContent = byId('popupContent');
-  const hasHadiah = hadiahContent && hadiahContent.textContent.trim().length > 0;
-  if (hasHadiah) { hadiah.style.display = 'flex'; return; }
-  const user = (byId('nama')?.value || '').trim();
-  if (user) { tampilkanHistoryGabungan(); }
-  else {
-    byId('historyContent').innerHTML = "<p style='color:#111;font-weight:700;margin:0'>Belum ada popup hadiah untuk ditampilkan.<br>Masukkan nama, lalu cek histori.</p>";
-    history.style.display = 'flex';
-  }
-}
-
-/* =============== KLIK BOX =============== */
-async function pilihBox(el){
-  if(sudahSpin) return; sudahSpin=true;
-  const boxes=document.querySelectorAll(".box");
-  indexDipilih=[...boxes].indexOf(el);
-
-  /* efek spin sebentar */
-  el.classList.add("flip-spin");
-  el.style.pointerEvents="none";
-
-  // ambil data
-  hadiahLain = await GAS.getSisaHadiah().catch(()=>[]);
-  while(hadiahLain.length<9) hadiahLain.push(3000);
-
-  const tipe = await GAS.getTipeKupon(namaUser).catch(()=>"kuponA");
-  let hadiah=10;
-  if(tipe==="kuponA") hadiah=[2500,3000,3500][Math.floor(Math.random()*3)];
-  else if(tipe==="kuponB") hadiah=[4000,4500,5000,5500][Math.floor(Math.random()*4)];
-  else hadiah=[3000,4000,5000][Math.floor(Math.random()*3)];
-  hadiahUtama=`Rp${hadiah.toLocaleString('id-ID')}`;
-
-  /* hentikan spin -> animasi flip bukaan */
-  setTimeout(()=> {
-    el.classList.remove("flip-spin");
-    el.classList.add("clicked");
-
-    bukaSemuaBox();
-
-    byId("popupContent").innerHTML = `
-      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:80px;margin-bottom:8px;">
-      <div style="font-size:22px;font-weight:900;color:#111">MENANG <span style="color:#C90">${hadiahUtama}</span></div>
-      <div class="subnote" style="color:#333">Screenshot & klaim melalui <b>Telegram</b>.</div>
-    `;
-    byId("popupHadiah").style.display = "flex";
-
-    GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true }).catch(()=>{});
-  }, 400);
-}
-
-/* =============== HISTORY (popup) =============== */
-async function tampilkanHistoryGabungan(){
-  const user = byId("nama").value.trim();
-  const userLC = user.toLowerCase();
-  const btnLbl = byId("textHistori");
-  let dot = 0; const iv = setInterval(()=>{ dot=(dot+1)%4; btnLbl.innerText = "LOADING" + ".".repeat(dot); }, 400);
-
-  if (!user) {
-    clearInterval(iv); btnLbl.innerText = "CEK HISTORY";
-    byId("historyContent").innerHTML = "<p style='color:#111;font-weight:700'>❌ Masukkan nama dulu sebelum cek histori!</p>";
-    byId("popupHistory").style.display = "flex";
-    return;
-  }
-
-  const data = await GAS.ambilHistoriGabungan(user).catch(()=>({member:[],fake:[]}));
-  clearInterval(iv); btnLbl.innerText = "CEK HISTORY";
-
-  let myRows = (data.member || []).filter(r => (r.nama || '').toLowerCase() === userLC);
-  let myLatest = myRows.length ? myRows[myRows.length - 1] : null;
-
-  let html = `
-    <div style="margin-bottom:8px;padding:8px;background:linear-gradient(to right,#ffcc00,#ff9900);color:#000;font-weight:bold;border-radius:6px;">
-      🥇 Kemenangan mulai dari Rp3.000 – Rp1.000.000 💰
-    </div>
-  `;
-  if (myLatest) {
-    html += `
-      <div style="margin:6px 0 10px 0; padding:10px 12px; border-radius:10px; background:linear-gradient(90deg,#2a2210,#3b2b00); border:1px solid #FFC107;">
-        🔥 Terbaru untuk kamu:
-        <span style="color:#FFD54F">@${myLatest.nama}</span>
-        memenangkan <span style="color:#FFC107">${formatRupiah(myLatest.status)}</span>
-      </div>
-    `;
-  }
-  html += `<h4 style="margin:6px 0;color:#111">🧾 Riwayat Anda</h4>`;
-  if (data.member && data.member.length) {
-    html += `<ul style="padding-left:16px;line-height:1.5;color:#111">`;
-    data.member.forEach(row => {
-      const isMe = (row.nama || '').toLowerCase() === userLC;
-      html += `<li${isMe ? ' style="background:rgba(255,193,7,.12);border-left:3px solid #FFC107;padding:2px 6px;border-radius:6px;"':''}>✅ <strong>${row.nama}</strong> menang <span style="color:gold;">${formatRupiah(row.status)}</span></li>`;
-    });
-    html += `</ul>`;
-  } else {
-    html += `<div style="opacity:.8;margin-bottom:6px;color:#111">Belum ada riwayat atas nama <b>${user}</b>.</div>`;
-  }
-  html += `<h4 style="margin:8px 0 6px 0;color:#111">🏆 Pemenang Hari Ini</h4>`;
-  if (data.fake && data.fake.length) {
-    html += `<ul style="padding-left:16px;line-height:1.5;color:#111">`;
-    data.fake.forEach(txt => { html += `<li>🏆 ${txt}</li>`; });
-    html += `</ul>`;
-  } else { html += `<div style="opacity:.8;color:#111">Belum ada data pemenang.</div>`; }
-
-  byId("historyContent").innerHTML = html;
-  byId("popupHistory").style.display = "flex";
-}
-
-function formatRupiah(val){
-  if (typeof val === 'number') return 'Rp ' + val.toLocaleString('id-ID');
-  if (/rp/i.test(String(val))) return val;
-  const n = parseInt(String(val).replace(/[^\d]/g,''))||0;
-  return 'Rp ' + n.toLocaleString('id-ID');
-}
-
-/* =============== DOM READY =============== */
-document.addEventListener('DOMContentLoaded',function(){
-  const btn=byId('btnVerifikasi');
-  setAllCoffins();
-  if(btn) btn.addEventListener('click',()=>spinStart());
-  // pastikan gak ada scroll
-  document.body.style.overflow='hidden';
-  document.documentElement.style.overflow='hidden';
-});
-  </script>
+<script>
+const COFFIN_SVG = `<svg viewBox="0 0 256 360" xmlns="http://www.w3.org/2000/svg"><path d="M128 8 40 64 24 152l64 192h80l64-192-16-88z" fill="#0B0B0B"/><path d="M128 24 56 72 42 152l58 168h56l58-168-14-80z" fill="#8E0008"/><rect x="118" y="90" width="20" height="124" fill="#2A0A0A"/><rect x="90" y="128" width="76" height="20" fill="#2A0A0A"/></svg>`;
+const byId = id=>document.getElementById(id);
+const setAllCoffins=()=>document.querySelectorAll('.box').forEach(el=>el.innerHTML=COFFIN_SVG);
+document.addEventListener('DOMContentLoaded',()=>{setAllCoffins();document.body.style.overflow='hidden';document.documentElement.style.overflow='hidden';});
+</script>
 </body>
 </html>
