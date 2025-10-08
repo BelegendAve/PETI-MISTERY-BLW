@@ -185,10 +185,18 @@ html, body{
 #gif-right-wrap img:first-child{ width:160px; display:block; }
 #gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; }
   /* ==== TWEAK HP KECIL: naikkan grid sedikit lagi ==== */
+/* ==== TWEAK HP KECIL: turunin grid dikit biar pas di atas GIF ==== */
 @media (max-width: 480px) {
-  .wrapper {
-    padding-bottom: 150px !important; /* lebih tinggi dari 140px sebelumnya */
-    transform: translateY(-10px);     /* naikin semua grid 20px biar nggak ketutup GIF */
+  .wrapper{
+    padding-bottom: 118px !important;  /* dulu 160px → bikin terlalu naik */
+    transform: translateY(-8px);       /* dulu -20px → sekarang turun ~12px */
+  }
+}
+/* HP sedang (481–600px) – aman, tanpa dorongan ekstra */
+@media (min-width: 481px) and (max-width: 600px){
+  .wrapper{
+    padding-bottom: 110px !important;
+    transform: none;
   }
 }
 
