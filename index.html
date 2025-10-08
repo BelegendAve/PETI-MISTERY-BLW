@@ -200,6 +200,66 @@ html, body{
   }
 }
 
+    /* ====== PATCH OFFSET OTOMATIS (LETakkan di paling bawah CSS) ====== */
+
+/* ukuran nyata header */
+:root{
+  --banner-h: 28px;         /* tinggi banner berjalan */
+  --judul-h:  72px;         /* tinggi papan judul (fixed-judul) */
+  --header-gap: 16px;       /* jarak kecil di bawah judul */
+  --header-total: calc(var(--banner-h) + var(--judul-h) + var(--header-gap));
+}
+
+/* paksa tinggi banner & judul konsisten */
+.banner-berjalan{
+  height: var(--banner-h) !important;
+  line-height: var(--banner-h) !important;
+  padding: 0 !important;
+}
+.fixed-judul{
+  top: var(--banner-h) !important;
+  height: var(--judul-h) !important;
+  display: flex; align-items: center; justify-content: center;
+}
+.fixed-judul::before{ height: var(--judul-h) !important; }
+
+/* offset semua konten tepat di bawah header */
+#formPage,
+.stage{
+  margin-top: var(--header-total) !important;
+}
+
+/* wrapper tidak lagi di-translate; biar selalu center */
+.wrapper{
+  padding-bottom: 110px;     /* ruang buat GIF bawah */
+  transform: none !important;
+}
+
+/* Desktop – bikin kotak lebih besar & tetap tidak “tenggelam” */
+@media (min-width: 900px){
+  :root{
+    --box-size: clamp(160px, 12vw, 220px);
+    --judul-h: 80px;         /* papan judul sedikit lebih tinggi di desktop */
+    --header-gap: 18px;
+  }
+  .wrapper{ padding-bottom: 60px; } /* desktop GIF biasanya lebih kecil */
+}
+
+/* HP kecil – tambahin ruang bawah dikit biar gak nabrak GIF */
+@media (max-width: 480px){
+  .wrapper{ padding-bottom: 118px; }
+}
+
+/* rapikan tombol toolbar supaya selalu muncul di bawah judul */
+.box-toolbar{
+  margin-top: 8px;
+  position: relative;
+  z-index: 2;                /* pastikan di atas glow judul */
+}
+
+/* (Opsional) sedikit naikkan grid kalau terasa terlalu jauh dari toolbar */
+.stage{ display: flex; flex-direction: column; align-items: center; }
+
   </style>
 </head>
 
