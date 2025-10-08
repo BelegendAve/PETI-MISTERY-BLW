@@ -25,14 +25,14 @@ html, body{
   --judul-icon-size: 58px;
   --judul-icon-gap: 16px;
   --judul-board-h: 58px;
-  --stage-offset: 110px;              /* naikin grid biar gak nabrak GIF bawah */
+  --stage-offset: 90px;              /* naikin grid biar gak nabrak GIF bawah */
   --box-size: clamp(116px, 27vw, 160px);
 }
 @media (max-width:600px){
   :root{
     --judul-icon-size: 46px;
     --judul-board-h: 52px;
-    --stage-offset: 120px;
+    --stage-offset: 80px;
     --box-size: clamp(104px, 29vw, 140px);
   }
 }
@@ -109,12 +109,18 @@ html, body{
   height: calc(100dvh - var(--stage-offset));
   display:flex; flex-direction:column; overflow:hidden;
 }
-.wrapper{ flex:1 1 auto; display:flex; justify-content:center; align-items:center; overflow:hidden; }
-.box-container{
-  display:grid; grid-template-columns: repeat(3, var(--box-size));
-  gap:18px; justify-content:center; align-content:center;
-  transform-origin:center;
+.wrapper{
+  flex:1 1 auto;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  padding-bottom: 110px;  /* lebih tinggi biar aman dari GIF bawah */
 }
+@media (max-width:600px){
+  .wrapper{ padding-bottom: 130px; }  /* tambahin ruang ekstra untuk HP */
+}
+
 /* kalau layar pendek, kecilin dikit supaya tetap muat tanpa scroll */
 @media (max-height:620px){ .box-container{ transform: scale(.92); } }
 @media (max-height:560px){ .box-container{ transform: scale(.86); } }
