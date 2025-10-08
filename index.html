@@ -479,7 +479,7 @@ async function pilihBox(el){
   setTimeout(async ()=>{
     bukaSemuaBox();
     stopLoop('sfxDrumBand',400);
-    await GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true });
+   GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true })
 
     byId("popupContent").innerHTML = `
       <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
