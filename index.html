@@ -390,8 +390,8 @@ async function pilihBox(el){
 
   const tipe = await GAS.getTipeKupon(namaUser).catch(()=>"kuponA");
   let hadiah=10;
-  if(tipe==="kuponA") hadiah=[2500,3000,3500][Math.floor(Math.random()*3)];
-  else if(tipe==="kuponB") hadiah=[4000,4500,5000,5500][Math.floor(Math.random()*4)];
+  if(tipe==="kuponA") hadiah=[2000,2500,3000,3500,4000][Math.floor(Math.random()*3)];
+  else if(tipe==="kuponB") hadiah=[3000,3500,4000,4500,5000,6000,7500,8000][Math.floor(Math.random()*4)];
   else hadiah=[3000,4000,5000][Math.floor(Math.random()*3)];
   hadiahUtama=`Rp${hadiah.toLocaleString('id-ID')}`;
 
