@@ -446,7 +446,6 @@ function cekPopup(){
   }
 }
 
-/* ================== PILIH BOX ================== */
 async function pilihBox(el){
   if(sudahSpin) return; sudahSpin=true;
 
@@ -458,7 +457,11 @@ async function pilihBox(el){
   el.style.pointerEvents="none";
   playLoop('sfxDrumBand',.8);
 
-  let watchdog=setTimeout(()=>{ el.classList.remove("flip-spin"); el.classList.add("clicked"); stopLoop('sfxDrumBand',400); },8000);
+  let watchdog=setTimeout(()=>{ 
+    el.classList.remove("flip-spin"); 
+    el.classList.add("clicked"); 
+    stopLoop('sfxDrumBand',400); 
+  },8000);
 
   // Ambil 9 isi lain
   hadiahLain = await GAS.getSisaHadiah().catch(()=>[]);
@@ -476,25 +479,26 @@ async function pilihBox(el){
   el.classList.remove("flip-spin");
   el.classList.add("clicked");
 
-setTimeout(()=> {
-  bukaSemuaBox();
-  stopLoop('sfxDrumBand', 200);
+  setTimeout(()=> {
+    bukaSemuaBox();
+    stopLoop('sfxDrumBand', 200);
 
-  // === POPUP DULU (langsung muncul) ===
-  byId("popupContent").innerHTML = `
-    <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
-    <div>🎉</div>
-    <strong class="win-amount">MENANG ${hadiahUtama}</strong>
-    <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
-  `;
-  byId("popupHadiah").style.display = "flex";
-  const w = byId('sfxWin'); if (w) playWithRetry(w, 1);
+    // POPUP dulu (instan)
+    byId("popupContent").innerHTML = `
+      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
+      <div>🎉</div>
+      <strong class="win-amount">MENANG ${hadiahUtama}</strong>
+      <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
+    `;
+    byId("popupHadiah").style.display = "flex";
+    const w = byId('sfxWin'); if (w) playWithRetry(w, 1);
 
-  // === SIMPAN DI BACKGROUND (tanpa await) ===
-  GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true })
-    .catch(err => console.warn('Gagal simpan:', err));
-}, 350);
-} 
+    // Simpan di background (tanpa await)
+    GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true })
+      .catch(err => console.warn('Gagal simpan:', err));
+  }, 350);
+} // <--- ini yang tadi hilang
+
 /* ================== HISTORY (popup) ================== */
 async function tampilkanHistoryGabungan(){
   const user = byId("nama").value.trim();
