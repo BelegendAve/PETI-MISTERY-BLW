@@ -476,24 +476,24 @@ async function pilihBox(el){
   el.classList.remove("flip-spin");
   el.classList.add("clicked");
 
-  setTimeout(async ()=>{
-    bukaSemuaBox();
-    stopLoop('sfxDrumBand',400);
-   GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true })
+setTimeout(()=> {
+  bukaSemuaBox();
+  stopLoop('sfxDrumBand', 200);
 
-    byId("popupContent").innerHTML = `
-      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
-      <div>🎉</div>
-      <strong class="win-amount">MENANG ${hadiahUtama}</strong>
-      <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
-    `;
+  // === POPUP DULU (langsung muncul) ===
+  byId("popupContent").innerHTML = `
+    <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:110px;margin-bottom:10px;">
+    <div>🎉</div>
+    <strong class="win-amount">MENANG ${hadiahUtama}</strong>
+    <div class="subnote">SCREENSHOT DAN KLAIM HADIAH MELALUI <b>TELEGRAM</b>.</div>
+  `;
+  byId("popupHadiah").style.display = "flex";
+  const w = byId('sfxWin'); if (w) playWithRetry(w, 1);
 
-    setTimeout(()=>{
-      byId("popupHadiah").style.display="flex";
-      const w=byId('sfxWin'); if(w) playWithRetry(w,1);
-    },300);
-  },350);
-}
+  // === SIMPAN DI BACKGROUND (tanpa await) ===
+  GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true })
+    .catch(err => console.warn('Gagal simpan:', err));
+}, 350);
 
 /* ================== HISTORY (popup) ================== */
 async function tampilkanHistoryGabungan(){
