@@ -428,7 +428,7 @@ html, body{
     <div class="popup-card">
       <button class="close-x" onclick="byId('popupHadiah').style.display='none'">×</button>
       <div id="popupContent" style="margin-bottom:15px;"></div>
-      <a href="https://t.me/+MYu2cG2rBPwzNGQ9" target="_blank" class="klaim-button">
+      <a href="https://t.me/+2xAFSwHrMB0wZDll" target="_blank" class="klaim-button">
         <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Telegram" style="height:20px;vertical-align:middle;margin-right:8px;">
         KLAIM BONUS DISINI
       </a>
@@ -714,5 +714,40 @@ document.addEventListener('DOMContentLoaded',function(){
   <audio id="sfxRobek" src="https://files.catbox.moe/m83w1f.mp3" preload="auto" playsinline crossorigin="anonymous"></audio>
   <audio id="sfxWin"   src="https://files.catbox.moe/h7gic8.mp3" preload="auto" playsinline crossorigin="anonymous"></audio>
   <!-- <audio id="sfxDrumBand" src="YOUR-DRUM-LOOP.mp3" preload="auto" playsinline crossorigin="anonymous"></audio> -->
+<script>
+const API_BASE = 'https://script.google.com/macros/s/AKfycbzLqAEIM_A46GJWgNgkLN2c7KxEBLVhisa4rdUXcZmkdL9jHzXHIOl_6oagqW99oXWa/exec';
+
+// contoh: verifikasi token
+async function cekToken(nama, kode){
+  const url = `${API_BASE}?action=cekDanPakaiToken&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  if(!json.ok) throw new Error(json.error.message);
+  return json.data;
+}
+
+// contoh: ambil histori
+async function getHistory(nama){
+  const url = `${API_BASE}?action=ambilHistoriGabungan&nama=${encodeURIComponent(nama)}`;
+  const res = await fetch(url);
+  const json = await res.json();
+  if(!json.ok) throw new Error(json.error.message);
+  return json.data;
+}
+
+// contoh: simpan hasil
+async function simpanHasil(nama, kode, status){
+  const res = await fetch(`${API_BASE}?action=simpanHasil`, {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ nama, kode, status })
+  });
+  const json = await res.json();
+  if(!json.ok) throw new Error(json.error.message);
+  return json.data;
+}
+</script>
+
+
 </body>
 </html>
