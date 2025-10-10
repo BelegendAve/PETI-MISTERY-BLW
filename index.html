@@ -208,11 +208,6 @@ html, body{
 #gif-right-wrap img:first-child{ width:160px; display:block; }
 #gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; }
   </style>
-<link rel="dns-prefetch" href="//scontent.fpnh24-1.fna.fbcdn.net">
-<link rel="preconnect" href="https://scontent.fpnh24-1.fna.fbcdn.net" crossorigin>
-<!-- ganti href kalau nanti pakai file sendiri (webp/png) -->
-<link rel="preload" as="image" href="https://scontent.fpnh24-1.fna.fbcdn.net/v/t39.30808-6/557678449_122165062040591196_8461093421843573173_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=1hs_BsCLfN0Q7kNvwF9_gly&_nc_oc=Adm7VwdzQDSmhCdzdbQso2zsObfZFQBB4-cp9KPmkGsusxSjpQn_1yGcAyUuL1nPuGA&_nc_zt=23&_nc_ht=scontent.fpnh24-1.fna&_nc_gid=ljh_GEOQB7xh2A3aZTGnWw&oh=00_AfdPFx2Hm0nAPfJtNmu71BYoHo34m8CwzdfuswB8cp5jEw&oe=68EE58F4">
-  
 </head>
 
 <body>
@@ -229,14 +224,7 @@ html, body{
     <div id="formPage" class="form-vertical">
       <div id="brand">
         <a href="https://belegendwin1.com" target="_blank" rel="nofollow noopener">
-        <img
-  id="brandLogo"
-  src="https://scontent.fpnh24-1.fna.fbcdn.net/v/t39.30808-6/557678449_122165062040591196_8461093421843573173_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=aa7b47&_nc_ohc=1hs_BsCLfN0Q7kNvwF9_gly&_nc_oc=Adm7VwdzQDSmhCdzdbQso2zsObfZFQBB4-cp9KPmkGsusxSjpQn_1yGcAyUuL1nPuGA&_nc_zt=23&_nc_ht=scontent.fpnh24-1.fna&_nc_gid=ljh_GEOQB7xh2A3aZTGnWw&oh=00_AfdPFx2Hm0nAPfJtNmu71BYoHo34m8CwzdfuswB8cp5jEw&oe=68EE58F4"
-  alt="BELEGENDWIN"
-  width="120" height="120"
-  loading="eager" decoding="async" fetchpriority="high"
-  style="height:64px"
-/>
+          <img src="https://i.ibb.co/j9DVyNpq/image-2.png" alt="BELEGENDWIN" />
         </a>
       </div>
       <input type="text" id="nama" placeholder="USERNAME"/>
@@ -412,7 +400,7 @@ async function pilihBox(el){
   const tipe = await GAS.getTipeKupon(namaUser).catch(()=>"kuponA");
   let hadiah=10;
   if(tipe==="kuponA") hadiah=rand([2000,2500,3000,3500,4000]);
-  else if(tipe==="kuponB") hadiah=rand([3000,3500,4000,4500,5000,4000,3500,8000]);
+  else if(tipe==="kuponB") hadiah=rand([3000,3500,4000,4500,5000,6000,7500,8000]);
   else hadiah=rand([3000,4000,5000]);
   hadiahUtama=`Rp${hadiah.toLocaleString('id-ID')}`;
 
@@ -423,20 +411,11 @@ async function pilihBox(el){
 
     bukaSemuaBox();
 
-    const brandLogo = byId('brandLogo');           // logo di FORM
-try { await brandLogo.decode(); } catch(e) {}  // pastikan siap dipaint
-const logoSrc = brandLogo.currentSrc || brandLogo.src;
-
-byId("popupContent").innerHTML = `
-  <img src="${logoSrc}" alt="BELEGENDWIN"
-       width="120" height="120" loading="eager" decoding="async"
-       style="height:80px;margin-bottom:8px;">
-  <div style="font-size:22px;font-weight:900;color:#111">
-    MENANG <span style="color:#C90">${hadiahUtama}</span>
-  </div>
-  <div class="subnote" style="color:#333">Screenshot & klaim melalui <b>Telegram</b>.</div>
-`;
-
+    byId("popupContent").innerHTML = `
+      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:80px;margin-bottom:8px;">
+      <div style="font-size:22px;font-weight:900;color:#111">MENANG <span style="color:#C90">${hadiahUtama}</span></div>
+      <div class="subnote" style="color:#333">Screenshot & klaim melalui <b>Telegram</b>.</div>
+    `;
     byId("popupHadiah").style.display = "flex";
 
     GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true }).catch(()=>{});
