@@ -400,7 +400,7 @@ async function pilihBox(el){
   const tipe = await GAS.getTipeKupon(namaUser).catch(()=>"kuponA");
   let hadiah=10;
   if(tipe==="kuponA") hadiah=rand([2000,2500,3000,3500,4000]);
-  else if(tipe==="kuponB") hadiah=rand([3000,3500,4000,4500,5000,6000,7500,8000]);
+  else if(tipe==="kuponB") hadiah=rand([3000,3500,4000,4500,5000,4000,3500,8000]);
   else hadiah=rand([3000,4000,5000]);
   hadiahUtama=`Rp${hadiah.toLocaleString('id-ID')}`;
 
