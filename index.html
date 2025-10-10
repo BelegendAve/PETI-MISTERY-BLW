@@ -208,6 +208,7 @@ html, body{
 #gif-right-wrap img:first-child{ width:160px; display:block; }
 #gif-right{ position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:90px; }
   </style>
+  <link rel="preload" as="image" href="assets/logo.webp">
 </head>
 
 <body>
@@ -224,7 +225,12 @@ html, body{
     <div id="formPage" class="form-vertical">
       <div id="brand">
         <a href="https://belegendwin1.com" target="_blank" rel="nofollow noopener">
-          <img src="https://i.ibb.co/j9DVyNpq/image-2.png" alt="BELEGENDWIN" />
+          <img id="brandLogo"
+     src="assets/logo.webp"
+     alt="BELEGENDWIN"
+     width="120" height="120"
+     loading="eager" decoding="async" fetchpriority="high"
+     style="height:64px">
         </a>
       </div>
       <input type="text" id="nama" placeholder="USERNAME"/>
@@ -411,11 +417,21 @@ async function pilihBox(el){
 
     bukaSemuaBox();
 
-    byId("popupContent").innerHTML = `
-      <img src="https://i.ibb.co/j9DVyNpq/image-2.png" style="height:80px;margin-bottom:8px;">
-      <div style="font-size:22px;font-weight:900;color:#111">MENANG <span style="color:#C90">${hadiahUtama}</span></div>
-      <div class="subnote" style="color:#333">Screenshot & klaim melalui <b>Telegram</b>.</div>
-    `;
+const logoSrc = (byId('brandLogo')?.currentSrc || byId('brandLogo')?.src || 'assets/logo.webp');
+
+byId("popupContent").innerHTML = `
+  <img src="${logoSrc}" alt="BELEGENDWIN"
+       width="120" height="120"
+       loading="eager" decoding="async"
+       style="height:80px;margin-bottom:8px;">
+  <div style="font-size:22px;font-weight:900;color:#111">
+    MENANG <span style="color:#C90">${hadiahUtama}</span>
+  </div>
+  <div class="subnote" style="color:#333">
+    Screenshot & klaim melalui <b>Telegram</b>.
+  </div>
+`;
+
     byId("popupHadiah").style.display = "flex";
 
     GAS.simpanHasil({ nama:namaUser, kode:kodeToken, status:hadiahUtama, klaim:true }).catch(()=>{});
